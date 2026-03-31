@@ -87,8 +87,6 @@
             --logo-blue: #1B3B5A; 
             --navy-deep: var(--logo-blue); 
             --dark-green: #1a3a32; 
-            --action-green: #2d5a27;
-            --light-gray: #f8f8f8;
             --font-heading: 'Arial', sans-serif;
             --font-body: 'Arial', sans-serif;
         }
@@ -227,7 +225,7 @@
             margin-right: 0;
         }
 
-        /* HERO SECTION (HOME) */
+        /* HERO SECTION */
         .hero {
             height: 100vh;
             background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
@@ -253,35 +251,6 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        .hero h1 span { display: block; }
-
-        .hero-tabs {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
-        }
-
-        .hero-tab {
-            padding: 14px 35px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            font-size: 1.1rem; 
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            transition: all 0.4s ease;
-            letter-spacing: 2px;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer; 
-        }
-        .hero-tab:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--white);
-            transform: translateY(-2px);
-        }
-
         .hero-estimate-container {
             width: 100%;
             display: flex;
@@ -302,12 +271,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             cursor: pointer;
-        }
-
-        .hero-estimate-btn:hover {
-            background: var(--white);
-            color: var(--gold);
-            transform: translateY(-3px);
         }
 
         .hero-phone-cta {
@@ -399,11 +362,6 @@
             border: none;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .btn-green-box:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-        }
 
         /* AREAS SERVE */
         .areas-serve-section { 
@@ -414,7 +372,7 @@
             background: var(--white); 
         }
         .areas-content { flex: 1.5; text-align: left; }
-        .areas-map-container { flex: 0.66; padding-right: 15px; }
+        .areas-map-container { flex: 0.66; }
         .areas-map-container img { width: 100%; height: auto; display: block; box-shadow: 15px 15px 0px var(--logo-blue); }
 
         .areas-content h2 { 
@@ -457,93 +415,29 @@
         .process-image img { width: 100%; height: auto; display: block; box-shadow: 15px 15px 0px var(--off-white); border: 1px solid rgba(255,255,255,0.2); }
         .process-content { flex: 1.5; text-align: left; }
         .process-header h2 { font-size: 2.5rem; text-transform: uppercase; margin-top: 0; margin-bottom: 10px; font-weight: 700; letter-spacing: 2px; line-height: 1; }
-        .accordion { border-top: 1px solid rgba(255, 255, 255, 0.2); }
-        .accordion-item { border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-        .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; cursor: pointer; }
+        .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
         .accordion-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
         .accordion-icon { width: 26px; height: 26px; background-color: var(--white); color: var(--logo-blue); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
         .accordion-item.active .accordion-content { max-height: 300px; padding-bottom: 15px; } 
 
-        /* MODAL STYLES */
+        /* MODAL */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(17, 30, 45, 0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(17, 30, 45, 0.85); display: none;
+            justify-content: center; align-items: center; z-index: 3000;
             backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: var(--white);
-            padding: 50px 40px;
-            max-width: 550px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            border: 4px solid var(--gold);
+            background: var(--white); padding: 50px 40px; max-width: 550px; width: 90%;
+            text-align: center; position: relative; border: 4px solid var(--gold);
             box-shadow: 0 25px 60px rgba(0,0,0,0.5);
         }
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--logo-blue);
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-promo-tag {
-            background: var(--gold);
-            color: var(--white);
-            padding: 5px 15px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-        .modal-content h2 {
-            color: var(--logo-blue);
-            font-size: 2.2rem;
-            margin: 0 0 15px 0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-        .modal-content p {
-            font-size: 1.2rem;
-            color: #444;
-            margin-bottom: 35px;
-            line-height: 1.6;
-        }
-        .btn-modal-cta {
-            background: var(--logo-blue);
-            color: var(--white);
-            padding: 16px 40px;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 700;
-            display: inline-block;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
-        .btn-modal-cta:hover {
-            background: var(--gold);
-            transform: translateY(-2px);
-        }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 32px; font-weight: bold; color: var(--logo-blue); cursor: pointer; line-height: 1; }
+        .modal-promo-tag { background: var(--gold); color: var(--white); padding: 5px 15px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 20px; letter-spacing: 1px; }
+        .btn-modal-cta { background: var(--logo-blue); color: var(--white); padding: 16px 40px; text-decoration: none; text-transform: uppercase; font-weight: 700; display: inline-block; cursor: pointer; border: none; font-size: 1rem; }
 
-        /* CONTACT SECTION */
+        /* CONTACT FORM */
         .project-section { padding: 80px 10%; background-color: var(--off-white); }
         .project-layout { display: flex; gap: 80px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
         .project-form-container { flex: 1.5; text-align: left; }
@@ -555,33 +449,26 @@
         .project-image { flex: 1; }
         .project-image img { width: 100%; height: auto; box-shadow: 15px 15px 0px var(--logo-blue); display: block; }
 
-        /* INNER PAGE STYLING */
+        /* INNER PAGES */
         .page-content-section { padding: 80px 6%; background: var(--white); }
         .page-flex-container { display: flex; gap: 60px; align-items: flex-start; max-width: 1400px; margin: 0 auto; }
         .page-left { flex: 1.5; }
-        .section-header h2 { font-size: 3rem; text-transform: uppercase; font-weight: 700; margin-top: 0; margin-bottom: 10px; color: var(--logo-blue); }
+        .section-header h2 { font-size: 3rem; text-transform: uppercase; font-weight: 700; color: var(--logo-blue); }
         .section-header .subtitle { font-size: 1.5rem; font-style: italic; margin-bottom: 30px; display: block; color: var(--logo-blue); }
         .btn-cta-link { display: inline-block; background: var(--logo-blue); color: var(--white); padding: 15px 40px; text-decoration: none; text-transform: uppercase; font-weight: 700; margin-top: 20px; cursor: pointer; }
         
-        .promo-card { background: var(--off-white); padding: 40px; border-left: 8px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: flex-start; min-height: 380px; }
-        .promo-tag { background: var(--gold); color: var(--white); padding: 5px 15px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
-        .promo-card h3 { font-size: 1.6rem; margin-bottom: 10px; color: var(--logo-blue); white-space: nowrap; letter-spacing: -0.5px; }
-        .promo-card p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; width: 100%; flex-grow: 1; }
-        .promo-card .btn-cta-link { margin-top: auto; }
+        .promo-card { background: var(--off-white); padding: 40px; border-left: 8px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: flex-start; }
 
         /* FOOTER */
         .main-footer { background-color: var(--logo-blue); color: var(--white); padding: 60px 6% 0; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; padding-bottom: 40px; }
-        .footer-col h4 { font-size: 1.2rem; text-transform: uppercase; margin-top: 0; margin-bottom: 20px; letter-spacing: 2px; color: var(--gold); }
-        .footer-col p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 10px; color: #ddd; }
-        .footer-col a { display: block; color: #ddd; text-decoration: none; margin-bottom: 10px; transition: color 0.3s ease; cursor: pointer; }
-        .footer-col a:hover { color: var(--gold); }
+        .footer-col h4 { font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; color: var(--gold); }
+        .footer-col a { display: block; color: #ddd; text-decoration: none; margin-bottom: 10px; }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; text-align: center; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #aaa; }
 
         @media (max-width: 1024px) {
-            .sub-info-bar, .elevate-section, .areas-serve-section, .process-layout { flex-direction: column; text-align: center; }
-            .nav-wrapper { margin-top: 20px; flex-direction: column; align-items: center; }
-            .nav-links a { margin-right: 15px; font-size: 0.7rem; }
+            .sub-info-bar, .elevate-section, .areas-serve-section, .process-layout, .page-flex-container, .project-layout { flex-direction: column; text-align: center; }
+            .nav-wrapper { margin-top: 20px; flex-direction: column; }
             .hero h1 { font-size: 1.8rem; }
         }
     </style>
@@ -596,7 +483,7 @@
 
         <div class="sub-info-bar">
             <a onclick="showPage('home')" class="logo">
-                <img id="logoImg" src="LayerProPaintingNoBackRound.png" alt="Layer Pro Painting Logo" onerror="handleLogoError()">
+                <img id="logoImg" src="LayerProPaintingNoBackRound.png" alt="Layer Pro Logo" onerror="handleLogoError()">
             </a>
             <div class="nav-wrapper">
                 <nav class="nav-links">
@@ -607,14 +494,14 @@
                     <a id="nav-promotions" onclick="showPage('promotions')">Special Offers</a>
                 </nav>
                 <div class="nav-estimate-group">
-                    <a onclick="showPage('home', 'estimate-home')" class="btn-estimate" style="text-decoration:none">Free Estimate</a>
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-estimate">Free Estimate</a>
                     <span class="nav-exp-subtext">20+ Years Experience</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- HOME PAGE VIEW -->
+    <!-- HOME PAGE -->
     <div id="home-view">
         <section class="hero">
             <h1>PROFESSIONAL PAINTING COMPANY IN THE OKANAGAN</h1>
@@ -649,7 +536,7 @@
             </div>
         </section>
 
-        <section id="about-section-home" class="elevate-section">
+        <section class="elevate-section">
             <div class="elevate-text">
                 <h2>Elevate Your Home</h2>
                 <h3>High-End Painting With a Personal Touch</h3>
@@ -657,59 +544,50 @@
                 <a onclick="showPage('home', 'estimate-home')" class="btn-green-box">Get Free Estimate</a>
             </div>
             <div class="elevate-image">
-                <img src="blue2livingroom.jpg" alt="Elevate Your Home">
+                <img src="blue2livingroom.jpg" alt="Living Room">
             </div>
         </section>
 
-        <section id="residential-services-home" class="residential-services-home">
+        <section class="residential-services-home">
             <h2>Residential Painting Services</h2>
             <div class="services-grid">
                 <div class="service-card" onclick="showPage('interior')">
-                    <img src="greenlivingroom.jpg" alt="Interior Painting">
+                    <img src="greenlivingroom.jpg" alt="Interior">
                     <div class="service-overlay">
                         <h4>Interior Painting</h4>
-                        <p>We prep and paint interior surfaces with precision, making your walls, ceiling and trim look flawless.</p>
+                        <p>Walls, ceilings, and trim finished to perfection.</p>
                     </div>
                 </div>
                 <div class="service-card" onclick="showPage('exterior')">
-                    <img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior Painting">
+                    <img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior">
                     <div class="service-overlay">
                         <h4>Exterior Painting</h4>
-                        <p style="color: var(--dark-green); text-shadow: 0px 2px 10px rgba(255,255,255,0.9), 0px 0px 15px rgba(255,255,255,1);">From stucco to siding, we deliver exterior painting that turns heads and weathers well.</p>
+                        <p>Durable finishes for siding, stucco, and decks.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <section id="areas-serve-home" class="areas-serve-section">
+
+        <section class="areas-serve-section">
             <div class="areas-map-container">
-                <img src="Okamap.jpg" alt="Okanagan Map">
+                <img src="Okamap.jpg" alt="Map">
             </div>
             <div class="areas-content">
                 <h2>Areas We Serve</h2>
                 <ul class="city-list">
                     <li>Vernon</li><li>Lake Country</li><li>Kelowna</li><li>West Kelowna</li>
                     <li>Peachland</li><li>Summerland</li><li>Naramata</li><li>Penticton</li>
-                    <li>Okanagan Falls</li><li>Oliver</li>
                 </ul>
-                <div class="areas-cta-container">
-                    <a onclick="showPage('home', 'estimate-home')" class="btn-areas-estimate">Get Free Estimate</a>
-                    <a onclick="showPage('promotions')" class="btn-areas-promo">Special Offers</a>
-                </div>
             </div>
         </section>
 
-        <section id="our-process-home" class="process-section">
+        <section class="process-section">
             <div class="process-layout">
-                <div class="process-image"><img src="ourprocess.jpg" alt="Our Process" onerror="this.src='blue-whitelivingroomandkitchen.jpg'"></div>
+                <div class="process-image"><img src="ourprocess.jpg" alt="Process"></div>
                 <div class="process-content">
-                    <div class="process-header"><h2>Our Process</h2></div>
-                    <div class="accordion">
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">1. Initial call</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>Discuss your goals and timeline during our first consultation.</p></div></div>
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">2. On-site Meeting and receiving your quote</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>We visit your space to provide a tailored, same-day quote.</p></div></div>
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">3. Scheduling</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>We pick dates that fit your availability and project scope.</p></div></div>
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">4. Execution</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>Our professional crew applies the finish and maintains a clean workspace.</p></div></div>
-                    </div>
+                    <h2>Our Process</h2>
+                    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">1. Initial Call</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>We discuss your vision and goals.</p></div></div>
+                    <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">2. On-site Quote</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>Accurate, same-day pricing provided on-site.</p></div></div>
                 </div>
             </div>
         </section>
@@ -717,20 +595,16 @@
         <section id="estimate-home" class="project-section">
             <div class="project-layout">
                 <div class="project-form-container">
-                    <h2>LET'S TALK ABOUT YOUR PROJECT</h2>
-                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
+                    <h2>START YOUR PROJECT</h2>
                     <form class="contact-form">
                         <input type="text" placeholder="First Name" required>
                         <input type="text" placeholder="Last Name" required>
                         <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <textarea placeholder="Tell us about your project" class="full-width" required></textarea>
+                        <button type="submit" class="btn-submit">Send Request</button>
                     </form>
                 </div>
-                <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
-                </div>
+                <div class="project-image"><img src="blue-whitelivingroomandkitchen.jpg" alt="Home"></div>
             </div>
         </section>
     </div>
@@ -738,26 +612,26 @@
     <!-- INTERIOR VIEW -->
     <div id="interior-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(27, 59, 90, 0.85), rgba(27, 59, 90, 0.85)), url('blue2livingroom.jpg');">
-            <h1>Interior Painting Services</h1>
+            <h1>Interior Painting</h1>
             <p>Premium Interior Finishing in the Okanagan</p>
         </section>
         <section class="page-content-section">
             <div class="page-flex-container">
                 <div class="page-left">
                     <div class="section-header">
-                        <h2>Interior Painting</h2>
+                        <h2>Interior Services</h2>
                         <span class="subtitle">Okanagan Professional Finish</span>
                     </div>
-                    <p>Layer Pro-Painting delivers premium interior painting services designed to elevate your home. We specialize in everything from walls and ceilings to high-end architectural trim and millwork.</p>
+                    <p>We specialize in everything from walls and ceilings to high-end architectural trim and millwork.</p>
                     <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;">
                         <li><strong style="color: var(--gold);">✓</strong> Walls & Ceilings</li>
-                        <li><strong style="color: var(--gold);">✓</strong> Kitchen Cabinets</li>
-                        <li><strong style="color: var(--gold);">✓</strong> Doors & Windows</li>
-                        <li><strong style="color: var(--gold);">✓</strong> Baseboards & Trim</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Cabinets</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Doors & Trim</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Millwork</li>
                     </ul>
                     <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link">Get Free Estimate</a>
                 </div>
-                <div style="flex: 1.2;"><img src="8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg" alt="Interior" style="width: 100%; box-shadow: 10px 10px 0 var(--logo-blue);"></div>
+                <div style="flex: 1.2;"><img src="8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg" alt="Interior"></div>
             </div>
         </section>
     </div>
@@ -765,26 +639,26 @@
     <!-- EXTERIOR VIEW -->
     <div id="exterior-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(26, 58, 50, 0.85), rgba(26, 58, 50, 0.85)), url('7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg');">
-            <h1>Exterior Painting Services</h1>
-            <p>Durable Outdoor Finishing in the Okanagan</p>
+            <h1>Exterior Painting</h1>
+            <p>Durable Outdoor Finishing for Your Home</p>
         </section>
         <section class="page-content-section">
             <div class="page-flex-container" style="flex-direction: row-reverse;">
                 <div class="page-left">
                     <div class="section-header">
-                        <h2 style="color: var(--dark-green);">Exterior Painting</h2>
+                        <h2 style="color: var(--dark-green);">Exterior Services</h2>
                         <span class="subtitle" style="color: var(--dark-green);">Premium Protection</span>
                     </div>
-                    <p>We handle siding, stucco, trim, and decks with precision and care to withstand the unique Okanagan elements.</p>
+                    <p>We handle siding, stucco, trim, and decks with precision and care to withstand the elements.</p>
                     <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;">
                         <li><strong style="color: var(--gold);">✓</strong> Stucco & Brick</li>
-                        <li><strong style="color: var(--gold);">✓</strong> Wood & Vinyl Siding</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Siding</li>
                         <li><strong style="color: var(--gold);">✓</strong> Decks & Patios</li>
-                        <li><strong style="color: var(--gold);">✓</strong> Fences & Gates</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Fences</li>
                     </ul>
                     <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link" style="background: var(--dark-green);">Get Free Estimate</a>
                 </div>
-                <div style="flex: 1.2;"><img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior" style="width: 100%; box-shadow: -10px 10px 0 var(--dark-green);"></div>
+                <div style="flex: 1.2;"><img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior"></div>
             </div>
         </section>
     </div>
@@ -793,20 +667,20 @@
     <div id="promotions-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(27, 59, 90, 0.85), rgba(27, 59, 90, 0.85)), url('blue2livingroom.jpg');">
             <h1>Special Offers</h1>
-            <p>Exclusive deals for your next painting project.</p>
+            <p>Exclusive deals for your next project.</p>
         </section>
         <section class="page-content-section">
             <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 <div class="promo-card">
                     <span class="promo-tag">Limited Time</span>
                     <h3>Spring Sales Event</h3>
-                    <p>10% Off Home Painting Projects $2500+. Book your painting project before May 15th.</p>
+                    <p>10% Off Home Painting Projects $2500+. Book your project before May 15th.</p>
                     <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link" style="background: var(--gold);">Claim Offer</a>
                 </div>
                 <div class="promo-card" style="border-left-color: var(--logo-blue);">
                     <span class="promo-tag" style="background: var(--logo-blue);">Referral Bonus</span>
                     <h3>Refer a Friend</h3>
-                    <p>Refer a friend or family member and receive a $100 gift card upon completion.</p>
+                    <p>Refer a friend and receive a $100 gift card upon completion of their project.</p>
                     <a href="tel:2508998878" class="btn-cta-link">Call to Refer</a>
                 </div>
             </div>
@@ -823,8 +697,7 @@
                         <h2>Our Story</h2>
                         <span class="subtitle">Craftsmanship Without Compromise</span>
                     </div>
-                    <p>With 20+ years of experience in the sector, we bring expertise to every brushstroke, ensuring your home is treated with the respect and care it deserves.</p>
-                    <p>We are a locally owned and operated business serving the entire Okanagan Valley.</p>
+                    <p>With 20+ years of experience, we bring expertise to every brushstroke. We are a locally owned business serving the Okanagan Valley.</p>
                     <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link">Get Free Estimate</a>
                 </div>
                 <div style="flex: 1; text-align: center;">
@@ -834,17 +707,7 @@
         </section>
     </div>
 
-    <!-- MODAL -->
-    <div id="promo-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div class="modal-promo-tag">Exclusive Seasonal Offer</div>
-            <h2>Spring Sales Event</h2>
-            <p>Transform your home this season. Book your project before May 15th and get <strong>10% OFF</strong> any project over $2,500.</p>
-            <button onclick="goToPromos()" class="btn-modal-cta">View All Special Offers</button>
-        </div>
-    </div>
-
+    <!-- FOOTER -->
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-col">
@@ -862,12 +725,24 @@
                 <h4>Contact Info</h4>
                 <p><strong>Phone:</strong> <a href="tel:2508998878" style="color:white; text-decoration:none;">250 899 8878</a></p>
                 <p><strong>Email:</strong> info@layerpropainting.com</p>
+                <p><strong>Hours:</strong> Mon - Fri, 8am - 4:30pm</p>
             </div>
         </div>
         <div class="footer-bottom">
             &copy; 2026 Layer Pro Painting Co. | Craftsmanship Without Compromise.
         </div>
     </footer>
+
+    <!-- POP-UP MODAL -->
+    <div id="promo-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-promo-tag">Exclusive Seasonal Offer</div>
+            <h2>Spring Sales Event</h2>
+            <p>Transform your home this season. Book before May 15th and get <strong>10% OFF</strong> any project over $2,500.</p>
+            <button onclick="goToPromos()" class="btn-modal-cta">View All Offers</button>
+        </div>
+    </div>
 
 </body>
 </html>
