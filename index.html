@@ -62,11 +62,10 @@
 
         // Modal Logic
         window.onload = function() {
-            // Check if modal has been shown in this session (optional, but good for UX)
             setTimeout(() => {
                 const modal = document.getElementById('promo-modal');
                 if (modal) modal.style.display = 'flex';
-            }, 1200); // Slight delay for premium feel
+            }, 1200); 
         };
 
         function closeModal() {
@@ -175,12 +174,6 @@
             display: flex;
             align-items: center;
             gap: 40px;
-        }
-
-        .nav-sections-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
         }
 
         .nav-links { 
@@ -434,16 +427,6 @@
             letter-spacing: 2px; 
         }
 
-        .areas-cta-container {
-            margin-top: 40px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .btn-areas-estimate { background: var(--logo-blue); color: var(--white); padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-block;}
-        .btn-areas-promo { background: var(--gold); color: var(--white); padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-block;}
-
         .city-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .city-list li { 
             color: var(--logo-blue); 
@@ -456,7 +439,7 @@
             letter-spacing: 1px; 
         }
 
-        /* RESIDENTIAL SERVICES SECTION */
+        /* RESIDENTIAL SERVICES SECTION (HOME) */
         .residential-services-home { background-color: var(--dark-green); color: var(--white); padding: 50px 6% 80px; text-align: center; }
         .residential-services-home h2 { font-size: 3rem; text-transform: uppercase; margin-bottom: 5px; font-weight: 700; letter-spacing: 2px; }
         .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1400px; margin: 20px auto 0; }
@@ -596,17 +579,10 @@
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; text-align: center; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #aaa; }
 
         @media (max-width: 1024px) {
-            .sub-info-bar { height: auto; flex-direction: column; padding: 20px; }
-            .nav-wrapper { flex-direction: column; gap: 20px; align-items: center; }
-            .nav-estimate-group { align-items: center; }
-            .nav-exp-subtext { text-align: center; font-size: 17px; } 
-            .values-container { grid-template-columns: 1fr; gap: 30px; }
-            .city-list { grid-template-columns: 1fr; }
-            .page-flex-container, .project-layout, .process-layout, .elevate-section, .areas-serve-section, .services-grid { flex-direction: column; text-align: center; }
-            .hero h1 { font-size: 1.8rem; }
-            .page-left { text-align: center; }
-            .sub-page-hero { padding-top: 260px; }
+            .sub-info-bar, .elevate-section, .areas-serve-section, .process-layout { flex-direction: column; text-align: center; }
+            .nav-wrapper { margin-top: 20px; flex-direction: column; align-items: center; }
             .nav-links a { margin-right: 15px; font-size: 0.7rem; }
+            .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -614,10 +590,8 @@
 
     <div class="header-container">
         <div class="top-info-bar">
-            <div>Hours: Monday to Friday, 8am to 4:30pm</div>
-            <div style="display: flex; gap: 25px;">
-                <a href="tel:2508998878" class="phone-link">Call 250 899 8878</a>
-            </div>
+            <div>Hours: Mon - Fri, 8am - 4:30pm</div>
+            <a href="tel:2508998878" class="phone-link">Call 250 899 8878</a>
         </div>
 
         <div class="sub-info-bar">
@@ -625,20 +599,16 @@
                 <img id="logoImg" src="LayerProPaintingNoBackRound.png" alt="Layer Pro Painting Logo" onerror="handleLogoError()">
             </a>
             <div class="nav-wrapper">
-                <div class="nav-sections-container">
-                    <nav class="nav-links">
-                        <a id="nav-home" onclick="showPage('home')" class="active-nav">Home</a>
-                        <a id="nav-about" onclick="showPage('about')">About</a>
-                        <a id="nav-interior" onclick="showPage('interior')">Interior Painting</a>
-                        <a id="nav-exterior" onclick="showPage('exterior')">Exterior Painting</a>
-                        <a id="nav-promotions" onclick="showPage('promotions')">Special Offers</a>
-                    </nav>
-                </div>
+                <nav class="nav-links">
+                    <a id="nav-home" onclick="showPage('home')" class="active-nav">Home</a>
+                    <a id="nav-about" onclick="showPage('about')">About</a>
+                    <a id="nav-interior" onclick="showPage('interior')">Interior Painting</a>
+                    <a id="nav-exterior" onclick="showPage('exterior')">Exterior Painting</a>
+                    <a id="nav-promotions" onclick="showPage('promotions')">Special Offers</a>
+                </nav>
                 <div class="nav-estimate-group">
-                    <nav class="nav-links">
-                        <a onclick="showPage('home', 'estimate-home')" class="btn-estimate">Free Estimate</a>
-                    </nav>
-                    <span class="nav-exp-subtext">20+ Years of Experience in the Sector</span>
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-estimate" style="text-decoration:none">Free Estimate</a>
+                    <span class="nav-exp-subtext">20+ Years Experience</span>
                 </div>
             </div>
         </div>
@@ -647,14 +617,7 @@
     <!-- HOME PAGE VIEW -->
     <div id="home-view">
         <section class="hero">
-            <h1>
-                <span>PROFESSIONAL PAINTING COMPANY</span>
-                <span>IN THE OKANAGAN</span>
-            </h1>
-            <div class="hero-tabs">
-                <a onclick="showPage('interior', 'interior-details')" class="hero-tab">Interior Painting</a>
-                <a onclick="showPage('exterior', 'exterior-details')" class="hero-tab">Exterior Painting</a>
-            </div>
+            <h1>PROFESSIONAL PAINTING COMPANY IN THE OKANAGAN</h1>
             <div class="hero-estimate-container">
                 <a onclick="showPage('home', 'estimate-home')" class="hero-estimate-btn">Get Free Estimate</a>
                 <a href="tel:2508998878" class="hero-phone-cta">Call 250 899 8878</a>
@@ -669,7 +632,7 @@
                 </div>
                 <div class="value-item">
                     <span class="value-title">WE FOLLOW THROUGH</span>
-                    <p>WE ALWAYS DO EXACTLY WHAT WE SAY WE'RE GOING TO DO.</p>
+                    <p>We always do exactly what we say we're going to do.</p>
                 </div>
                 <div class="value-item">
                     <span class="value-title">WE CARE</span>
@@ -680,8 +643,8 @@
                     <p>Our strong relationships with our customers and crew mean everything.</p>
                 </div>
                 <div class="value-item">
-                    <span class="value-title">WE USE TOP QUALITY BEST PRODUCTS</span>
-                    <p>We will always use the best brands in the industry for your project</p>
+                    <span class="value-title">WE USE TOP QUALITY PRODUCTS</span>
+                    <p>We will always use the best brands in the industry for your project.</p>
                 </div>
             </div>
         </section>
@@ -772,283 +735,121 @@
         </section>
     </div>
 
-    <!-- INTERIOR PAINTING VIEW -->
+    <!-- INTERIOR VIEW -->
     <div id="interior-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(27, 59, 90, 0.85), rgba(27, 59, 90, 0.85)), url('blue2livingroom.jpg');">
             <h1>Interior Painting Services</h1>
             <p>Premium Interior Finishing in the Okanagan</p>
         </section>
-
-        <section id="interior-details" class="page-content-section">
+        <section class="page-content-section">
             <div class="page-flex-container">
                 <div class="page-left">
                     <div class="section-header">
                         <h2>Interior Painting</h2>
                         <span class="subtitle">Okanagan Professional Finish</span>
                     </div>
-                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">Layer Pro-Painting delivers premium interior painting services designed to elevate your home. We specialize in everything from walls and ceilings to high-end architectural trim and millwork.</p>
-                    <p style="font-size: 1.1rem; line-height: 1.8;">Our team takes immense pride in thorough surface preparation, ensuring that the final coat looks flawless and stands the test of time.</p>
-                    
-                    <div style="margin: 30px 0;">
-                        <h3 style="color: var(--logo-blue); text-transform: uppercase; font-size: 1.2rem; margin-bottom: 15px; letter-spacing: 1px;">What We Paint</h3>
-                        <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 1.05rem; color: #444;">
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Walls & Ceilings</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Kitchen Cabinets</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Doors & Windows</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Baseboards & Trim</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Staircases</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Custom Millwork</li>
-                        </ul>
-                    </div>
-
-                    <a onclick="showPage('interior', 'estimate-interior')" class="btn-cta-link">Get Free Estimate</a>
+                    <p>Layer Pro-Painting delivers premium interior painting services designed to elevate your home. We specialize in everything from walls and ceilings to high-end architectural trim and millwork.</p>
+                    <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;">
+                        <li><strong style="color: var(--gold);">✓</strong> Walls & Ceilings</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Kitchen Cabinets</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Doors & Windows</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Baseboards & Trim</li>
+                    </ul>
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link">Get Free Estimate</a>
                 </div>
                 <div style="flex: 1.2;"><img src="8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg" alt="Interior" style="width: 100%; box-shadow: 10px 10px 0 var(--logo-blue);"></div>
             </div>
         </section>
-
-        <section id="estimate-interior" class="project-section">
-            <div class="project-layout">
-                <div class="project-form-container">
-                    <h2>LET'S TALK ABOUT YOUR INTERIOR PROJECT</h2>
-                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
-                    <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
-                    </form>
-                </div>
-                <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
-                </div>
-            </div>
-        </section>
     </div>
 
-    <!-- EXTERIOR PAINTING VIEW -->
+    <!-- EXTERIOR VIEW -->
     <div id="exterior-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(26, 58, 50, 0.85), rgba(26, 58, 50, 0.85)), url('7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg');">
             <h1>Exterior Painting Services</h1>
-            <p>Durable & Elegant Finishing for your Okanagan Home</p>
+            <p>Durable Outdoor Finishing in the Okanagan</p>
         </section>
-
-        <section id="exterior-details" class="page-content-section">
+        <section class="page-content-section">
             <div class="page-flex-container" style="flex-direction: row-reverse;">
                 <div class="page-left">
                     <div class="section-header">
                         <h2 style="color: var(--dark-green);">Exterior Painting</h2>
-                        <span class="subtitle" style="color: var(--dark-green);">Premium Outdoor Protection</span>
+                        <span class="subtitle" style="color: var(--dark-green);">Premium Protection</span>
                     </div>
-                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">Layer Pro-Painting provides high-quality, professional exterior painting services. We handle siding, stucco, trim, and decks with precision and care to withstand the unique Okanagan elements.</p>
-                    <p style="font-size: 1.1rem; line-height: 1.8;">A fresh coat of premium exterior paint not only boosts curb appeal but also provides a vital protective barrier for your home's structure.</p>
-                    
-                    <div style="margin: 30px 0;">
-                        <h3 style="color: var(--dark-green); text-transform: uppercase; font-size: 1.2rem; margin-bottom: 15px; letter-spacing: 1px;">What We Paint</h3>
-                        <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 1.05rem; color: #444;">
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Stucco & Brick</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Wood & Vinyl Siding</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Decks & Patios</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Fences & Gates</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Fascia & Eaves</li>
-                            <li><strong style="color: var(--gold); margin-right: 8px;">✓</strong> Exterior Doors</li>
-                        </ul>
-                    </div>
-
-                    <a onclick="showPage('exterior', 'estimate-exterior')" class="btn-cta-link" style="background: var(--dark-green);">Get Free Estimate</a>
+                    <p>We handle siding, stucco, trim, and decks with precision and care to withstand the unique Okanagan elements.</p>
+                    <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;">
+                        <li><strong style="color: var(--gold);">✓</strong> Stucco & Brick</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Wood & Vinyl Siding</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Decks & Patios</li>
+                        <li><strong style="color: var(--gold);">✓</strong> Fences & Gates</li>
+                    </ul>
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link" style="background: var(--dark-green);">Get Free Estimate</a>
                 </div>
                 <div style="flex: 1.2;"><img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior" style="width: 100%; box-shadow: -10px 10px 0 var(--dark-green);"></div>
             </div>
         </section>
-
-        <section id="estimate-exterior" class="project-section">
-            <div class="project-layout">
-                <div class="project-form-container">
-                    <h2>LET'S TALK ABOUT YOUR EXTERIOR PROJECT</h2>
-                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
-                    <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
-                    </form>
-                </div>
-                <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
-                </div>
-            </div>
-        </section>
     </div>
 
-    <!-- SPECIAL OFFERS PAGE VIEW -->
+    <!-- PROMOTIONS VIEW -->
     <div id="promotions-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(27, 59, 90, 0.85), rgba(27, 59, 90, 0.85)), url('blue2livingroom.jpg');">
             <h1>Special Offers</h1>
             <p>Exclusive deals for your next painting project.</p>
         </section>
-
         <section class="page-content-section">
             <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 <div class="promo-card">
                     <span class="promo-tag">Limited Time</span>
                     <h3>Spring Sales Event</h3>
-                    <p>10% Off Home Painting Projects $2500+. Book your painting project before May 15th to lock in this exclusive rate.</p>
-                    <a onclick="showPage('promotions', 'estimate-promotions')" class="btn-cta-link" style="background: var(--gold);">Claim Offer</a>
+                    <p>10% Off Home Painting Projects $2500+. Book your painting project before May 15th.</p>
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link" style="background: var(--gold);">Claim Offer</a>
                 </div>
                 <div class="promo-card" style="border-left-color: var(--logo-blue);">
                     <span class="promo-tag" style="background: var(--logo-blue);">Referral Bonus</span>
                     <h3>Refer a Friend</h3>
-                    <p>Refer a friend or family member and receive a $100 gift card upon completion of their project. Sharing is caring!</p>
+                    <p>Refer a friend or family member and receive a $100 gift card upon completion.</p>
                     <a href="tel:2508998878" class="btn-cta-link">Call to Refer</a>
-                </div>
-                <div class="promo-card" style="border-left-color: var(--dark-green);">
-                    <span class="promo-tag" style="background: var(--dark-green);">Complimentary</span>
-                    <h3>Free Colour Consult</h3>
-                    <p>Not sure which shade suits your space best? Book a project with us and receive a complimentary professional colour consultation to ensure perfect results.</p>
-                    <a onclick="showPage('promotions', 'estimate-promotions')" class="btn-cta-link" style="background: var(--dark-green);">Book Consult</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="estimate-promotions" class="project-section">
-            <div class="project-layout">
-                <div class="project-form-container">
-                    <h2>CLAIM YOUR OFFER & GET A QUOTE</h2>
-                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Mention your special offer in the message below.</p>
-                    <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
-                    </form>
-                </div>
-                <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- ABOUT PAGE VIEW -->
+    <!-- ABOUT VIEW -->
     <div id="about-view" style="display:none;">
-        <section class="sub-page-hero" style="background-image: url('8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg'); min-height: 65vh; background-position: center top;"></section>
-
+        <section class="sub-page-hero" style="background-image: url('8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg'); min-height: 40vh;"></section>
         <section class="page-content-section">
             <div class="page-flex-container">
                 <div class="page-left">
                     <div class="section-header">
-                        <h2>ABOUT LAYER PRO-PAINTING</h2>
-                        <span class="subtitle">Our Story & Commitment</span>
+                        <h2>Our Story</h2>
+                        <span class="subtitle">Craftsmanship Without Compromise</span>
                     </div>
-                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">At Layer Pro-Painting, we believe a beautiful space starts with a seamless process. Our promise is to deliver premium finishes through a professional, detail-driven, and customer-centered approach.</p>
-                    <p style="font-size: 1.1rem; line-height: 1.8;">With 20+ years of experience in the sector, we bring expertise to every brushstroke, ensuring your home is treated with the respect and care it deserves. We are a locally owned and operated business serving the entire Okanagan Valley.</p>
-                    <a onclick="showPage('about', 'estimate-about')" class="btn-cta-link">Get Free Estimate</a>
+                    <p>With 20+ years of experience in the sector, we bring expertise to every brushstroke, ensuring your home is treated with the respect and care it deserves.</p>
+                    <p>We are a locally owned and operated business serving the entire Okanagan Valley.</p>
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-cta-link">Get Free Estimate</a>
                 </div>
-                
-                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                    <img src="LayerProPaintingNoBackRound.png" alt="Logo" style="width: 100%; max-width: 300px;" onerror="handleLogoError()">
-                    
-                    <div style="background: var(--off-white); padding: 25px; text-align: center; border-left: 5px solid var(--logo-blue); width: 100%;">
-                        <p style="margin: 0 0 15px 0; font-size: 1.1rem;">Kelowna, British Columbia<br><span style="font-style: italic; color: var(--gold);">Serving the entire Okanagan Valley</span></p>
-                        
-                        <p style="margin: 0 0 5px 0; font-weight: bold; color: var(--logo-blue);">Phone: <a href="tel:2508998878" style="color: var(--logo-blue); text-decoration: none;">250 899 8878</a></p>
-                        <p style="margin: 0; font-weight: bold; color: var(--logo-blue);">Email: <a href="mailto:info@layerpropainting.com" style="color: var(--logo-blue); text-decoration: none;">info@layerpropainting.com</a></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="page-content-section" style="background: var(--off-white); border-top: 1px solid #ddd;">
-            <div class="section-header" style="text-align: center; margin-bottom: 50px;">
-                <h2>Why Choose Us</h2>
-                <span class="subtitle">The Layer Pro Difference</span>
-            </div>
-            <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-                <div style="background: var(--white); padding: 30px; border-top: 4px solid var(--logo-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <h3 style="color: var(--logo-blue); margin-top: 0;">Meticulous Prep</h3>
-                    <p style="line-height: 1.7; margin-bottom: 0;">A flawless finish relies on perfect preparation. We never cut corners when it comes to sanding, patching, and priming.</p>
-                </div>
-                <div style="background: var(--white); padding: 30px; border-top: 4px solid var(--logo-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <h3 style="color: var(--logo-blue); margin-top: 0;">Premium Materials</h3>
-                    <p style="line-height: 1.7; margin-bottom: 0;">We use top-tier, industry-leading paints to ensure lasting durability, vibrant color, and an immaculate final look.</p>
-                </div>
-                <div style="background: var(--white); padding: 30px; border-top: 4px solid var(--logo-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <h3 style="color: var(--logo-blue); margin-top: 0;">Expert Team</h3>
-                    <p style="line-height: 1.7; margin-bottom: 0;">Our experienced painters can handle any size of project.</p>
-                </div>
-                <div style="background: var(--white); padding: 30px; border-top: 4px solid var(--logo-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <h3 style="color: var(--logo-blue); margin-top: 0;">Satisfaction Guaranteed</h3>
-                    <p style="line-height: 1.7; margin-bottom: 0;">We guarantee your painting project satisfaction.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="process-about" class="process-section">
-            <div class="process-layout">
-                <div class="process-image"><img src="ourprocess.jpg" alt="Our Process" onerror="this.src='blue-whitelivingroomandkitchen.jpg'"></div>
-                <div class="process-content">
-                    <div class="process-header"><h2>Our Process</h2></div>
-                    <div class="accordion">
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">1. Initial call</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>Discuss your goals and timeline during our first consultation.</p></div></div>
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">2. On-site Meeting and receiving your quote</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>We visit your space to provide a tailored, same-day quote.</p></div></div>
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">3. Scheduling</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>We pick dates that fit your availability and project scope.</p></div></div>
-                        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)"><h3 class="accordion-title">4. Execution</h3><div class="accordion-icon">+</div></div><div class="accordion-content"><p>Our professional crew applies the finish and maintains a clean workspace.</p></div></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="areas-serve-about" class="areas-serve-section">
-            <div class="areas-map-container">
-                <img src="Okamap.jpg" alt="Okanagan Map">
-            </div>
-            <div class="areas-content">
-                <h2 style="color: var(--dark-green);">Areas We Serve</h2>
-                <ul class="city-list">
-                    <li>Vernon</li><li>Lake Country</li><li>Kelowna</li><li>West Kelowna</li>
-                    <li>Peachland</li><li>Summerland</li><li>Naramata</li><li>Penticton</li>
-                    <li>Okanagan Falls</li><li>Oliver</li>
-                </ul>
-                <div class="areas-cta-container">
-                    <a onclick="showPage('about', 'estimate-about')" class="btn-areas-estimate">Get Free Estimate</a>
-                    <a onclick="showPage('promotions')" class="btn-areas-promo">Special Offers</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="estimate-about" class="project-section">
-            <div class="project-layout">
-                <div class="project-form-container">
-                    <h2>LET'S TALK ABOUT YOUR PROJECT</h2>
-                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
-                    <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
-                    </form>
-                </div>
-                <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
+                <div style="flex: 1; text-align: center;">
+                    <img src="LayerProPaintingNoBackRound.png" alt="Logo" style="max-width: 300px; width: 100%;">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- GLOBAL BLUE FOOTER -->
+    <!-- MODAL -->
+    <div id="promo-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-promo-tag">Exclusive Seasonal Offer</div>
+            <h2>Spring Sales Event</h2>
+            <p>Transform your home this season. Book your project before May 15th and get <strong>10% OFF</strong> any project over $2,500.</p>
+            <button onclick="goToPromos()" class="btn-modal-cta">View All Special Offers</button>
+        </div>
+    </div>
+
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-col">
                 <h4>Layer Pro Painting</h4>
-                <p>High-end residential painting services across the Okanagan Valley. Delivering flawless interior and exterior finishes with craftsmanship without compromise.</p>
+                <p>High-end residential painting services across the Okanagan Valley.</p>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -1056,31 +857,17 @@
                 <a onclick="showPage('about')">About Us</a>
                 <a onclick="showPage('interior')">Interior Painting</a>
                 <a onclick="showPage('exterior')">Exterior Painting</a>
-                <a onclick="showPage('promotions')">Special Offers</a>
             </div>
             <div class="footer-col">
                 <h4>Contact Info</h4>
-                <p><strong>Phone:</strong> <a href="tel:2508998878" style="display:inline; color:var(--white);">250 899 8878</a></p>
+                <p><strong>Phone:</strong> <a href="tel:2508998878" style="color:white; text-decoration:none;">250 899 8878</a></p>
                 <p><strong>Email:</strong> info@layerpropainting.com</p>
-                <p><strong>Hours:</strong> Mon - Fri, 8am - 4:30pm</p>
-                <p>Kelowna, BC</p>
             </div>
         </div>
         <div class="footer-bottom">
             &copy; 2026 Layer Pro Painting Co. | Craftsmanship Without Compromise.
         </div>
     </footer>
-
-    <!-- POP-UP MODAL -->
-    <div id="promo-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div class="modal-promo-tag">Exclusive Seasonal Offer</div>
-            <h2>Spring Sales Event</h2>
-            <p>Transform your home this season. Book your project before May 15th and get <strong>10% OFF</strong> any project over $2,500.</p>
-            <a onclick="goToPromos()" class="btn-modal-cta">View All Special Offers</a>
-        </div>
-    </div>
 
 </body>
 </html>
