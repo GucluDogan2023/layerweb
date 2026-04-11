@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Luxe Painting | High-End Architectural Finishing</title>
     
+    <title>Layer Pro Painting | High-End Painters in Kelowna & Okanagan</title>
+    <meta name="description" content="Layer Pro Painting offers premium residential interior and exterior painting services in Kelowna and the Okanagan Valley. Explore our AI Colour Design Assistant and request a free estimate today.">
+    <meta name="keywords" content="painting company Kelowna, Okanagan painters, interior painting, exterior painting, Layer Pro Painting, residential painters, high-end finishing, cabinet painting Kelowna, stucco painting Okanagan">
+    <meta property="og:title" content="Layer Pro Painting | Kelowna's Premium Painters">
+    <meta property="og:description" content="Elevate your home with our high-end architectural finishing. Try our AI visualizer and get a free quote today.">
+    <meta property="og:type" content="website">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
     <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+
         function handleLogoError() {
             const img = document.getElementById('logoImg');
             if (img) img.style.display = 'none';
         }
 
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const nav = document.getElementById('main-nav-wrapper');
+            nav.classList.toggle('active-mobile-nav');
+        }
+
         // Navigation Controller
         function showPage(pageId, anchor = null) {
-            const views = ['home-view', 'about-view', 'interior-view', 'exterior-view', 'promotions-view'];
+            const views = ['home-view', 'about-view', 'ai-view', 'interior-view', 'exterior-view', 'design-view', 'promotions-view'];
             
             // Hide all pages
             views.forEach(id => {
@@ -27,6 +45,10 @@
             
             const activeLink = document.getElementById('nav-' + pageId);
             if (activeLink) activeLink.classList.add('active-nav');
+
+            // Close mobile menu if open
+            const nav = document.getElementById('main-nav-wrapper');
+            if (nav) nav.classList.remove('active-mobile-nav');
 
             // Show selected page
             const targetPage = document.getElementById(pageId + '-view');
@@ -62,11 +84,17 @@
 
         // Modal Logic
         window.onload = function() {
-            // Check if modal has been shown in this session (optional, but good for UX)
             setTimeout(() => {
                 const modal = document.getElementById('promo-modal');
                 if (modal) modal.style.display = 'flex';
-            }, 1200); // Slight delay for premium feel
+            }, 1200); 
+
+            // Initialize ALL contact forms for Formspree seamlessly
+            document.querySelectorAll('.contact-form').forEach((form, index) => {
+                const formId = 'estimate-form-' + index;
+                form.id = formId;
+                formspree('initForm', { formElement: '#' + formId, formId: 'maqlvngo' });
+            });
         };
 
         function closeModal() {
@@ -76,6 +104,128 @@
         function goToPromos() {
             closeModal();
             showPage('promotions');
+        }
+
+        // --- INTERNAL AI COLOUR ASSISTANT ENGINE ---
+        async function generateColorPalette() {
+            const promptInput = document.getElementById('ai-prompt-input').value.toLowerCase();
+            const resultContainer = document.getElementById('ai-palette-result');
+            const loadingIndicator = document.getElementById('ai-loading');
+            const generateBtn = document.getElementById('ai-generate-btn');
+            
+            if (!promptInput.trim()) {
+                showAiError("Please describe the feeling or style you want for your space.");
+                return;
+            }
+
+            resultContainer.innerHTML = '';
+            resultContainer.style.display = 'none';
+            loadingIndicator.style.display = 'block';
+            generateBtn.disabled = true;
+            generateBtn.innerText = "✨ Consulting Design Engine...";
+
+            setTimeout(() => {
+                try {
+                    let paletteData = null;
+
+                    const designLibrary = [
+                        { keywords: ['romantic', 'pink', 'blush', 'rose', 'soft', 'feminine', 'delicate', 'sweet', 'love'], data: { concept_description: "A soft, romantic palette featuring delicate blush tones and warm accents for a gentle, inviting space.", colors: [ { name: "Dusty Rose", hex: "#DCAEAA", reason: "A muted, sophisticated pink for an elegant feature wall." }, { name: "Vintage Lace", hex: "#FDF5E6", reason: "A creamy, soft white to balance and brighten." }, { name: "Warm Gold", hex: "#D4AF37", reason: "A metallic accent to bring a touch of luxury and warmth." }, { name: "Soft Cashmere", hex: "#E1D5C9", reason: "A warm, subtle taupe for grounding the lighter shades." } ] } },
+                        { keywords: ['jewel', 'regal', 'emerald', 'sapphire', 'rich', 'luxurious', 'velvet', 'ruby', 'amethyst', 'opulent'], data: { concept_description: "A highly saturated, opulent palette inspired by precious gemstones for a dramatic, luxurious feel.", colors: [ { name: "Emerald Glaze", hex: "#1A513D", reason: "A deep, rich green perfect for a striking dining room or study." }, { name: "Sapphire Night", hex: "#0F2847", reason: "A profound navy blue for dramatic depth and elegance." }, { name: "Brushed Brass", hex: "#B89947", reason: "A warm metallic contrast to make the dark jewel tones pop." }, { name: "Plum Wine", hex: "#5C3A46", reason: "A sophisticated, muted purple for a touch of unexpected luxury." } ] } },
+                        { keywords: ['boho', 'eclectic', 'vintage', 'macrame', 'mustard', 'funky', '70s', 'retro', 'free spirit'], data: { concept_description: "A free-spirited, eclectic palette blending warm retro hues with grounded, earthy neutrals.", colors: [ { name: "Mustard Seed", hex: "#D29C38", reason: "A vibrant, earthy yellow for an uplifting burst of energy." }, { name: "Macrame White", hex: "#F2EBE1", reason: "A warm, textured off-white for the primary walls." }, { name: "Burnt Orange", hex: "#B65A3D", reason: "A retro-inspired accent for doors or painted furniture." }, { name: "Olive Branch", hex: "#7B8055", reason: "A muted, natural green to tie the vintage tones together." } ] } },
+                        { keywords: ['farmhouse', 'country', 'barn', 'shiplap', 'casual', 'rustic', 'cottage'], data: { concept_description: "A charming, comfortable modern farmhouse palette featuring crisp lights and grounded, rustic accents.", colors: [ { name: "Shiplap White", hex: "#F8F9FA", reason: "A bright, clean white perfect for board-and-batten or primary walls." }, { name: "Barnwood Grey", hex: "#8A8D8F", reason: "A cool, weathered grey for trim, doors, or lower cabinets." }, { name: "Pitch Black", hex: "#222222", reason: "A stark, high-contrast black for hardware and window frames." }, { name: "Sage Gray", hex: "#A9B1A7", reason: "A subtle, earthy green-gray for a soft pop of color." } ] } },
+                        { keywords: ['scandi', 'scandinavian', 'nordic', 'hygge', 'pale', 'light wood', 'winter', 'minimal'], data: { concept_description: "A 'Hygge' inspired Nordic palette maximizing natural light with soft, pale tones and warm contrasts.", colors: [ { name: "Snow Drift", hex: "#FAFAFA", reason: "An ultra-clean, slightly warm white to reflect maximum light." }, { name: "Birch Wood", hex: "#E5D3B3", reason: "A pale, warm tone mimicking natural Scandinavian blonde woods." }, { name: "Fjord Blue", hex: "#7E8E9F", reason: "A muted, icy blue-grey for a calming accent wall." }, { name: "Soft Charcoal", hex: "#4A4A4A", reason: "A softer alternative to harsh black for creating depth." } ] } },
+                        { keywords: ['mid-century', 'mcm', 'atomic', 'walnut', 'teal', 'midcentury', '1950s', '1960s'], data: { concept_description: "A classic Mid-Century Modern palette blending iconic, saturated retro colors with rich wood tones.", colors: [ { name: "Atomic Teal", hex: "#1A757B", reason: "A bold, iconic mid-century color for a statement door or wall." }, { name: "Walnut Brown", hex: "#5C4033", reason: "A deep, rich brown to complement vintage furniture." }, { name: "Eichler White", hex: "#EFEFE8", reason: "A slightly warm, flat white to serve as a gallery-like backdrop." }, { name: "Palm Springs Orange", hex: "#D6613A", reason: "A vibrant, energetic accent color." } ] } },
+                        { keywords: ['forest', 'cabin', 'pine', 'woods', 'timber', 'moss', 'mountain', 'lodge'], data: { concept_description: "A rugged, grounding palette inspired by mountain lodges and deep evergreen forests.", colors: [ { name: "Pine Needle", hex: "#2C4A3B", reason: "A deep, immersive forest green for a cozy, enclosed feel." }, { name: "River Rock", hex: "#74787A", reason: "A cool, natural grey inspired by mountain streams." }, { name: "Timber Brown", hex: "#6E4B3A", reason: "A rich, warm bark tone for trim or architectural details." }, { name: "Morning Mist", hex: "#D3D9D9", reason: "A soft, cool off-white to bring light into the darker space." } ] } },
+                        { keywords: ['mediterranean', 'tuscan', 'spanish', 'olive', 'terracotta', 'sun-baked', 'stucco', 'warmth'], data: { concept_description: "A sun-drenched, warm palette inspired by coastal villas in Spain and Italy.", colors: [ { name: "Sun-baked Clay", hex: "#C27357", reason: "A rich terracotta tone for bringing immense warmth to a room." }, { name: "Olive Grove", hex: "#6B705C", reason: "A dusty, organic green typical of Mediterranean landscapes." }, { name: "Stucco White", hex: "#F3EBE1", reason: "A highly textured, warm, sandy off-white for the main walls." }, { name: "Deep Sea", hex: "#1D3F58", reason: "A strong, dark blue accent inspired by the Mediterranean sea." } ] } },
+                        { keywords: ['coastal', 'ocean', 'beach', 'blue', 'breeze', 'sea', 'nautical', 'sand', 'water'], data: { concept_description: "A serene, airy coastal palette bringing the calmness of the sea and sand indoors.", colors: [ { name: "Sea Salt White", hex: "#F4F7F6", reason: "A crisp, clean white with a hint of sea spray for the main walls." }, { name: "Driftwood Gray", hex: "#C4C3B3", reason: "A warm, weathered neutral for trim or cabinetry." }, { name: "Ocean Fog", hex: "#8DA399", reason: "A muted, sophisticated blue-green for accents." }, { name: "Deep Navy", hex: "#1B3B5A", reason: "A strong grounding color for doors or lower cabinets." } ] } },
+                        { keywords: ['dark', 'moody', 'industrial', 'black', 'charcoal', 'dramatic', 'gothic', 'shadow'], data: { concept_description: "A bold, moody aesthetic with deep, sophisticated tones perfect for an intimate or striking space.", colors: [ { name: "Charcoal Slate", hex: "#2F3640", reason: "A deeply saturated gray for dramatic primary walls." }, { name: "Aged Brass", hex: "#B2945E", reason: "A metallic-inspired accent to bring warmth to the dark tones." }, { name: "Smoked Glass", hex: "#718093", reason: "A mid-tone cool gray to bridge the contrasts." }, { name: "Matte Onyx", hex: "#111111", reason: "A pure, luxurious black for striking architectural details." } ] } },
+                        { keywords: ['warm', 'earth', 'cozy', 'nature', 'desert', 'clay', 'autumn', 'inviting'], data: { concept_description: "An inviting, organic palette drawing from earthy tones and natural warmth.", colors: [ { name: "Warm Alabaster", hex: "#F3EFE7", reason: "A creamy, soft white to keep the space bright but cozy." }, { name: "Terracotta Clay", hex: "#C06C4C", reason: "A rich, earthy accent color for a feature wall." }, { name: "Sage Leaf", hex: "#8A9A86", reason: "A grounding, natural green to bring the outdoors in." }, { name: "Mushroom Taupe", hex: "#A59C94", reason: "A versatile, warm neutral for millwork and doors." } ] } },
+                        { keywords: ['modern', 'minimalist', 'clean', 'white', 'bright', 'stark', 'contemporary', 'gallery'], data: { concept_description: "A sleek, bright minimalist palette that maximizes light and architectural clean lines.", colors: [ { name: "Chantilly Lace", hex: "#F4F6F1", reason: "A brilliant, pure white for a modern gallery-like feel." }, { name: "Gallery Ash", hex: "#D8D8D8", reason: "A very subtle, cool light gray for soft depth." }, { name: "Steel Graphite", hex: "#4A4E53", reason: "A sharp, high-contrast dark gray for window mullions or accents." }, { name: "Blonde Wood", hex: "#D4C5B3", reason: "A warm, natural tone to soften the sharp modern edges." } ] } }
+                    ];
+
+                    for (const style of designLibrary) {
+                        if (style.keywords.some(kw => promptInput.includes(kw))) {
+                            paletteData = style.data;
+                            break; 
+                        }
+                    }
+
+                    if (!paletteData) {
+                        paletteData = {
+                            concept_description: "A timeless, chic neutral palette offering a sophisticated and highly versatile foundation tailored to your unique prompt.",
+                            colors: [
+                                { name: "Classic Pearl", hex: "#F5F5F0", reason: "A soft, elegant white that flatters any lighting." },
+                                { name: "Greige Stone", hex: "#B8B4A9", reason: "A perfect blend of gray and beige for warm, elegant trim." },
+                                { name: "Layer Pro Blue", hex: "#1B3B5A", reason: "Our signature navy to add a touch of tailored luxury." },
+                                { name: "Burnished Gold", hex: "#B2945E", reason: "A subtle accent color to introduce refined warmth." }
+                            ]
+                        };
+                    }
+
+                    displayPalette(paletteData);
+
+                } catch (error) {
+                    console.error("Generation Error:", error);
+                    showAiError("We're currently unable to generate a palette. Please try again in a moment!");
+                } finally {
+                    loadingIndicator.style.display = 'none';
+                    generateBtn.disabled = false;
+                    generateBtn.innerText = "✨ Generate Custom Palette";
+                }
+            }, 1800); 
+        }
+
+        function displayPalette(data) {
+            const container = document.getElementById('ai-palette-result');
+            let html = `
+                <div style="background: var(--white); padding: 30px; border-top: 4px solid var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-top: 30px; border-radius: 4px;">
+                    <h3 style="color: var(--logo-blue); margin-top: 0; font-size: 1.4rem;">Your Bespoke Palette</h3>
+                    <p style="font-style: italic; color: #555; margin-bottom: 25px;">${data.concept_description}</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            `;
+
+            data.colors.forEach(color => {
+                html += `
+                    <div style="border: 1px solid #eee; padding: 15px; border-radius: 4px;">
+                        <div style="background-color: ${color.hex}; height: 80px; width: 100%; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); margin-bottom: 15px;"></div>
+                        <h4 style="margin: 0 0 5px 0; color: var(--logo-blue); font-size: 1.1rem;">${color.name}</h4>
+                        <div style="font-family: monospace; color: #888; font-size: 0.9rem; margin-bottom: 10px;">${color.hex}</div>
+                        <p style="font-size: 0.9rem; margin: 0; color: #666; line-height: 1.4;">${color.reason}</p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <div style="margin-top: 30px; text-align: center;">
+                        <a onclick="showPage('ai', 'estimate-ai')" class="btn-cta-link" style="margin-top:0;">Request an Estimate for this Look</a>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+            container.style.display = 'block';
+        }
+
+        function showAiError(message) {
+            const container = document.getElementById('ai-palette-result');
+            container.innerHTML = `<div style="background: #fee; color: #c00; padding: 15px; border-left: 4px solid #c00; margin-top: 20px;">${message}</div>`;
+            container.style.display = 'block';
+        }
+
+        function addAiKeyword(word) {
+            const input = document.getElementById('ai-prompt-input');
+            if (input.value.length > 0 && !input.value.endsWith(' ')) { input.value += ', '; }
+            input.value += word;
+            input.focus();
+        }
+
+        function insertPrompt(selectElement) {
+            if(selectElement.value) {
+                const input = document.getElementById('ai-prompt-input');
+                input.value = selectElement.value;
+                input.focus();
+                selectElement.selectedIndex = 0; 
+            }
         }
     </script>
 
@@ -96,517 +246,210 @@
 
         * { box-sizing: border-box; }
         
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 180px; 
-        }
-
-        body { 
-            margin: 0; padding: 0; 
-            font-family: var(--font-body); 
-            background: var(--white); 
-            color: var(--black); 
-            line-height: 1.6;
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 180px; }
+        body { margin: 0; padding: 0; font-family: var(--font-body); background: var(--white); color: var(--black); line-height: 1.6; overflow-x: hidden;}
 
         /* HEADER */
-        .header-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 2000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+        .header-container { position: fixed; top: 0; left: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .top-info-bar { background-color: var(--navy-deep); color: var(--white); height: 35px; display: flex; justify-content: space-between; align-items: center; padding: 0 4%; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+        .sub-info-bar { background-color: #ffffff; height: 140px; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 6%; border-bottom: 2px solid var(--gold); position: relative; }
+        .phone-link { font-weight: 800; color: var(--white); text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 16px; }
+        
+        .logo { display: flex; align-items: center; text-decoration: none; height: 100%; cursor: pointer; outline: none; }
+        .logo img { height: 85px; width: auto; display: block; object-fit: contain; border: 0; }
+        
+        .mobile-menu-btn { display: none; font-size: 1.5rem; font-weight: bold; color: var(--logo-blue); cursor: pointer; padding: 8px 15px; border: 2px solid var(--logo-blue); border-radius: 4px; transition: all 0.3s ease;}
+        .mobile-menu-btn:active { background: var(--off-white); }
 
-        .top-info-bar {
-            background-color: var(--navy-deep);
-            color: var(--white);
-            height: 35px; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4%;
-            font-size: 11px; 
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .sub-info-bar {
-            background-color: #ffffff; 
-            height: 140px; 
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6%;
-            border-bottom: 2px solid var(--gold);
-        }
-
-        .phone-link {
-            font-weight: 800;
-            color: var(--white);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px; 
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            height: 100%;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .logo img {
-            height: 85px; 
-            width: auto;
-            display: block;
-            object-fit: contain;
-            border: 0;
-        }
-
-        .nav-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .nav-sections-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .nav-links { 
-            display: flex; 
-            align-items: center; 
-        }
-
-        .nav-links a {
-            color: var(--logo-blue); 
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.75rem; 
-            letter-spacing: 1px;
-            margin-right: 20px;
-            transition: all 0.3s ease;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
+        .nav-wrapper { display: flex; align-items: center; gap: 45px; }
+        .nav-sections-container { display: flex; align-items: center; } 
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        
+        .nav-links a { color: var(--logo-blue); text-decoration: none; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; transition: all 0.3s ease; font-weight: 700; cursor: pointer; text-align: center; line-height: 1.3; }
         .nav-links a:hover { color: var(--gold); }
         .nav-links a.active-nav { color: var(--gold) !important; }
 
-        .nav-exp-subtext {
-            font-size: 17px; 
-            color: var(--logo-blue); 
-            font-style: italic;
-            font-weight: 700;
-            margin-top: 8px;
-            letter-spacing: -0.5px;
-            white-space: nowrap;
-        }
+        /* ✨ Desktop Break Class for Stacking Menu Items ✨ */
+        .desk-break { display: block; }
 
-        .nav-estimate-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; 
-        }
-
-        .nav-links a.btn-estimate {
-            background: var(--logo-blue); 
-            border: 1px solid var(--logo-blue); 
-            color: var(--white) !important; 
-            padding: 12px 25px;
-            text-transform: uppercase;
-            font-size: 0.85rem; 
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            display: inline-block;
-            margin-right: 0;
-        }
+        .nav-exp-subtext { font-size: 16px; color: var(--logo-blue); font-style: italic; font-weight: 700; margin-top: 5px; letter-spacing: -0.5px; white-space: nowrap; text-align: right; }
+        .nav-estimate-group { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
+        .nav-links a.btn-estimate { background: var(--logo-blue); border: 1px solid var(--logo-blue); color: var(--white) !important; padding: 12px 25px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; font-weight: 700; transition: all 0.3s ease; display: inline-block; margin-bottom: 5px; }
 
         /* HERO SECTION (HOME) */
-        .hero {
-            height: 100vh;
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                              url('6B9BE080-3A40-439F-A3D9-0F697597164F_1_105_c.jpeg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--white);
-            text-align: center;
-            padding: 150px 6% 0; 
-        }
-
-        .hero h1 {
-            font-size: clamp(1.2rem, 3.75vw, 3.1rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
+        .hero { height: 100vh; background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('6B9BE080-3A40-439F-A3D9-0F697597164F_1_105_c.jpeg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--white); text-align: center; padding: 150px 5% 0; }
+        .hero h1 { font-size: clamp(1.5rem, 4vw, 3.1rem); font-weight: 700; text-transform: uppercase; letter-spacing: 4px; line-height: 1.3; margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .hero h1 span { display: block; }
+        .hero-tabs { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 25px; }
+        .hero-tab { padding: 14px 30px; border: 1px solid rgba(255, 255, 255, 0.4); font-size: 1rem; color: var(--white); background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); transition: all 0.4s ease; letter-spacing: 1px; text-decoration: none; display: inline-block; cursor: pointer; }
+        .hero-tab:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--white); transform: translateY(-2px); }
 
-        .hero-tabs {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
-        }
+        .hero-estimate-container { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .hero-estimate-btn { padding: 18px 30px; background: var(--gold); color: var(--white); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; text-align: center; max-width: 90vw;}
+        .hero-estimate-btn:hover { background-color: var(--white); color: var(--gold); transform: translateY(-3px); }
 
-        .hero-tab {
-            padding: 14px 35px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            font-size: 1.1rem; 
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            transition: all 0.4s ease;
-            letter-spacing: 2px;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer; 
-        }
-        .hero-tab:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--white);
-            transform: translateY(-2px);
-        }
+        .btn-ai-animated { animation: ai-color-cycle 10s infinite ease-in-out; color: var(--white) !important; border: none; }
+        .btn-ai-animated:hover { color: var(--white) !important; background-color: transparent; }
+        @keyframes ai-color-cycle { 0% { background-color: var(--logo-blue); } 25% { background-color: var(--gold); } 50% { background-color: var(--dark-green); } 75% { background-color: var(--gold); } 100% { background-color: var(--logo-blue); } }
 
-        .hero-estimate-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .hero-estimate-btn {
-            padding: 18px 50px;
-            background: var(--gold);
-            color: var(--white);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-        }
-
-        .hero-estimate-btn:hover {
-            background: var(--white);
-            color: var(--gold);
-            transform: translateY(-3px);
-        }
-
-        .hero-phone-cta {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-            transition: color 0.3s ease;
-            letter-spacing: 1px;
-        }
-
-        .hero-phone-cta:hover {
-            color: var(--gold);
-        }
+        .hero-phone-cta { color: var(--white); text-decoration: none; font-size: 1.3rem; font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,0.6); transition: color 0.3s ease; letter-spacing: 1px; }
+        .hero-phone-cta:hover { color: var(--gold); }
 
         /* VALUES BAR */
-        .values-bar {
-            background: var(--white);
-            padding: 60px 0 40px; 
-            border-bottom: 1px solid #eee;
-        }
-
-        .values-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); 
-            width: 96%;
-            max-width: 1500px;
-            margin: 0 auto;
-            gap: 15px;
-        }
-
-        .value-item {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .value-title {
-            font-size: 0.95rem; 
-            font-weight: 700;
-            background: var(--logo-blue); 
-            color: var(--white); 
-            padding: 12px 10px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            min-height: 85px; 
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            letter-spacing: 1px;
-        }
-
-        .value-item p {
-            color: var(--logo-blue);
-            font-weight: 500;
-            margin: 0;
-            font-size: 0.9rem;
-        }
+        .values-bar { background: var(--white); padding: 50px 0 30px; border-bottom: 1px solid #eee; }
+        .values-container { display: grid; grid-template-columns: repeat(5, 1fr); width: 96%; max-width: 1500px; margin: 0 auto; gap: 15px; }
+        .value-item { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .value-title { font-size: 0.9rem; font-weight: 700; background: var(--logo-blue); color: var(--white); padding: 12px 10px; margin-bottom: 15px; text-transform: uppercase; min-height: 85px; width: 100%; display: flex; align-items: center; justify-content: center; letter-spacing: 1px; }
+        .value-item p { color: var(--logo-blue); font-weight: 500; margin: 0; font-size: 0.9rem; }
 
         /* ELEVATE SECTION */
-        .elevate-section { 
-            padding: 80px 6%; 
-            display: flex; 
-            align-items: flex-start;
-            gap: 60px; 
-            background: var(--white); 
-        }
+        .elevate-section { padding: 80px 6%; display: flex; align-items: flex-start; gap: 60px; background: var(--white); }
         .elevate-text { flex: 1.5; text-align: left; }
-        .elevate-text h2 { font-size: 3rem; color: var(--dark-green); text-transform: uppercase; margin: 0 0 10px 0; font-weight: 700; letter-spacing: 2px; }
-        .elevate-text h3 { font-size: 1.5rem; color: var(--dark-green); margin-bottom: 30px; font-weight: 400; font-style: italic; }
+        .elevate-text h2 { font-size: 2.5rem; color: var(--dark-green); text-transform: uppercase; margin: 0 0 10px 0; font-weight: 700; letter-spacing: 2px; }
+        .elevate-text h3 { font-size: 1.3rem; color: var(--dark-green); margin-bottom: 30px; font-weight: 400; font-style: italic; }
         .elevate-text p { font-size: 1.1rem; color: var(--dark-green); line-height: 1.8; margin-bottom: 25px; }
         .elevate-image { flex: 1; }
         .elevate-image img { width: 100%; height: auto; display: block; box-shadow: 15px 15px 0px var(--logo-blue); }
 
-        .btn-green-box {
-            background-color: var(--dark-green); 
-            color: var(--white);
-            padding: 16px 32px;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 700;
-            display: inline-block;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .btn-green-box:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-        }
+        .btn-green-box { background-color: var(--dark-green); color: var(--white); padding: 16px 32px; text-decoration: none; text-transform: uppercase; font-weight: 700; display: inline-block; letter-spacing: 1px; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;}
+        .btn-green-box:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0,0,0,0.15); }
 
         /* AREAS SERVE */
-        .areas-serve-section { 
-            padding: 80px 6%; 
-            display: flex; 
-            align-items: flex-start; 
-            gap: 60px; 
-            background: var(--white); 
-        }
+        .areas-serve-section { padding: 80px 6%; display: flex; align-items: flex-start; gap: 60px; background: var(--white); }
         .areas-content { flex: 1.5; text-align: left; }
         .areas-map-container { flex: 0.66; padding-right: 15px; }
         .areas-map-container img { width: 100%; height: auto; display: block; box-shadow: 15px 15px 0px var(--logo-blue); }
-
-        .areas-content h2 { 
-            font-size: 3rem; 
-            color: var(--dark-green); 
-            text-transform: uppercase; 
-            margin-top: 0; 
-            margin-bottom: 30px; 
-            font-weight: 700; 
-            letter-spacing: 2px; 
-        }
-
-        .areas-cta-container {
-            margin-top: 40px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .btn-areas-estimate { background: var(--logo-blue); color: var(--white); padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-block;}
-        .btn-areas-promo { background: var(--gold); color: var(--white); padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-block;}
-
+        .areas-content h2 { font-size: 2.5rem; color: var(--dark-green); text-transform: uppercase; margin-top: 0; margin-bottom: 30px; font-weight: 700; letter-spacing: 2px; }
+        .areas-cta-container { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
+        .btn-areas-estimate { background: var(--logo-blue); color: var(--white); padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-block; text-align: center;}
+        .btn-areas-promo { background: var(--gold); color: var(--white); padding: 15px 30px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; display: inline-block; text-align: center;}
         .city-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .city-list li { 
-            color: var(--logo-blue); 
-            font-size: 1.6rem; 
-            font-weight: 700; 
-            font-style: italic; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            letter-spacing: 1px; 
-        }
+        .city-list li { color: var(--logo-blue); font-size: 1.4rem; font-weight: 700; font-style: italic; display: flex; align-items: center; gap: 10px; letter-spacing: 1px; }
 
         /* RESIDENTIAL SERVICES SECTION */
-        .residential-services-home { background-color: var(--dark-green); color: var(--white); padding: 50px 6% 80px; text-align: center; }
-        .residential-services-home h2 { font-size: 3rem; text-transform: uppercase; margin-bottom: 5px; font-weight: 700; letter-spacing: 2px; }
-        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1400px; margin: 20px auto 0; }
-        .service-card { position: relative; height: 500px; box-shadow: 15px 15px 0px var(--white); background: transparent; overflow: hidden; cursor: pointer; }
+        .residential-services-home { background-color: var(--dark-green); color: var(--white); padding: 60px 6%; text-align: center; }
+        .residential-services-home h2 { font-size: 2.5rem; text-transform: uppercase; margin-bottom: 5px; font-weight: 700; letter-spacing: 2px; }
+        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1400px; margin: 30px auto 0; }
+        .service-card { position: relative; height: 450px; box-shadow: 10px 10px 0px var(--white); background: transparent; overflow: hidden; cursor: pointer; }
         .service-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 1; }
         .service-card:hover img { transform: scale(1.05); }
-        .service-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; text-align: center; }
-        .service-overlay h4 { background: var(--white); color: var(--dark-green); padding: 12px 30px; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 20px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .service-overlay p { font-size: 1.15rem; font-weight: 700; color: var(--white); text-shadow: 0px 2px 5px rgba(0,0,0,0.9), 0px 0px 10px rgba(0,0,0,0.6); }
+        .service-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
+        .service-overlay h4 { background: var(--white); color: var(--dark-green); padding: 12px 25px; font-size: 1.5rem; text-transform: uppercase; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .service-overlay p { font-size: 1.1rem; font-weight: 700; color: var(--white); text-shadow: 0px 2px 5px rgba(0,0,0,0.9), 0px 0px 10px rgba(0,0,0,0.6); }
 
         /* PROCESS SECTION */
-        .process-section { background-color: var(--logo-blue); color: var(--white); padding: 30px 6% 30px; }
+        .process-section { background-color: var(--logo-blue); color: var(--white); padding: 60px 6%; }
         .process-layout { display: flex; align-items: center; gap: 60px; max-width: 1400px; margin: 0 auto; }
         .process-image { flex: 0.5; } 
         .process-image img { width: 100%; height: auto; display: block; box-shadow: 15px 15px 0px var(--off-white); border: 1px solid rgba(255,255,255,0.2); }
         .process-content { flex: 1.5; text-align: left; }
-        .process-header h2 { font-size: 2.5rem; text-transform: uppercase; margin-top: 0; margin-bottom: 10px; font-weight: 700; letter-spacing: 2px; line-height: 1; }
+        .process-header h2 { font-size: 2.2rem; text-transform: uppercase; margin-top: 0; margin-bottom: 20px; font-weight: 700; letter-spacing: 2px; line-height: 1; }
         .accordion { border-top: 1px solid rgba(255, 255, 255, 0.2); }
         .accordion-item { border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-        .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; cursor: pointer; }
-        .accordion-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
-        .accordion-icon { width: 26px; height: 26px; background-color: var(--white); color: var(--logo-blue); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+        .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; cursor: pointer; }
+        .accordion-title { font-size: 1.1rem; font-weight: 700; margin: 0; }
+        .accordion-icon { width: 26px; height: 26px; background-color: var(--white); color: var(--logo-blue); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;}
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
         .accordion-item.active .accordion-content { max-height: 300px; padding-bottom: 15px; } 
 
         /* MODAL STYLES */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(17, 30, 45, 0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: var(--white);
-            padding: 50px 40px;
-            max-width: 550px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            border: 4px solid var(--gold);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-        }
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--logo-blue);
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-promo-tag {
-            background: var(--gold);
-            color: var(--white);
-            padding: 5px 15px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-        .modal-content h2 {
-            color: var(--logo-blue);
-            font-size: 2.2rem;
-            margin: 0 0 15px 0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-        .modal-content p {
-            font-size: 1.2rem;
-            color: #444;
-            margin-bottom: 35px;
-            line-height: 1.6;
-        }
-        .btn-modal-cta {
-            background: var(--logo-blue);
-            color: var(--white);
-            padding: 16px 40px;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 700;
-            display: inline-block;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
-        .btn-modal-cta:hover {
-            background: var(--gold);
-            transform: translateY(-2px);
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 30, 45, 0.85); display: none; justify-content: center; align-items: center; z-index: 3000; backdrop-filter: blur(8px); }
+        .modal-content { background: var(--white); padding: 40px 30px; max-width: 550px; width: 90%; text-align: center; position: relative; border: 4px solid var(--gold); box-shadow: 0 25px 60px rgba(0,0,0,0.5); }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 28px; font-weight: bold; color: var(--logo-blue); cursor: pointer; line-height: 1; }
+        .modal-promo-tag { background: var(--gold); color: var(--white); padding: 5px 15px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 20px; letter-spacing: 1px; }
+        .modal-content h2 { color: var(--logo-blue); font-size: 1.8rem; margin: 0 0 15px 0; letter-spacing: 1px; text-transform: uppercase; font-weight: 800; }
+        .modal-content p { font-size: 1.1rem; color: #444; margin-bottom: 30px; line-height: 1.5; }
+        .btn-modal-cta { background: var(--logo-blue); color: var(--white); padding: 15px 30px; text-decoration: none; text-transform: uppercase; font-weight: 700; display: inline-block; letter-spacing: 1px; transition: all 0.3s ease; cursor: pointer; border: none; font-size: 0.95rem; width: 100%; }
+        .btn-modal-cta:hover { background: var(--gold); transform: translateY(-2px); }
 
         /* CONTACT SECTION */
-        .project-section { padding: 80px 10%; background-color: var(--off-white); }
-        .project-layout { display: flex; gap: 80px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
+        .project-section { padding: 80px 6%; background-color: var(--off-white); }
+        .project-layout { display: flex; gap: 60px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
         .project-form-container { flex: 1.5; text-align: left; }
-        .project-form-container h2 { font-size: 2.5rem; color: var(--logo-blue); text-transform: uppercase; margin-top: 0; margin-bottom: 30px; font-weight: 700; line-height: 1.1; }
-        .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .contact-form input, .contact-form textarea { padding: 15px; border: 1px solid #ddd; width: 100%; font-family: inherit; font-size: 1rem; }
-        .contact-form textarea.full-width { grid-column: span 2; min-height: 180px; }
-        .btn-submit { grid-column: span 2; background: var(--logo-blue); color: var(--white); padding: 15px 45px; border: none; text-transform: uppercase; font-weight: 700; cursor: pointer; width: fit-content; transition: background 0.3s ease; }
+        .project-form-container h2 { font-size: 2.2rem; color: var(--logo-blue); text-transform: uppercase; margin-top: 0; margin-bottom: 15px; font-weight: 700; line-height: 1.1; }
+        .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .contact-form input, .contact-form textarea { padding: 15px; border: 1px solid #ddd; width: 100%; font-family: inherit; font-size: 1rem; border-radius: 4px; }
+        .contact-form textarea.full-width { grid-column: span 2; min-height: 150px; }
+        .btn-submit { grid-column: span 2; background: var(--logo-blue); color: var(--white); padding: 15px 30px; border: none; text-transform: uppercase; font-weight: 700; cursor: pointer; width: 100%; max-width: 300px; transition: background 0.3s ease; border-radius: 4px;}
+        .btn-submit:hover { background: var(--gold); }
         .project-image { flex: 1; }
         .project-image img { width: 100%; height: auto; box-shadow: 15px 15px 0px var(--logo-blue); display: block; }
 
         /* INNER PAGE STYLING */
+        .sub-page-hero { background-size: cover; background-repeat: no-repeat; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 220px 6% 100px; }
+        .sub-page-hero h1 { font-size: 2.5rem; text-transform: uppercase; margin: 0 0 10px 0; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .sub-page-hero p { font-size: 1.1rem; font-style: italic; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
         .page-content-section { padding: 80px 6%; background: var(--white); }
-        .page-flex-container { display: flex; gap: 60px; align-items: flex-start; max-width: 1400px; margin: 0 auto; }
+        .page-flex-container { display: flex; gap: 50px; align-items: flex-start; max-width: 1400px; margin: 0 auto; }
         .page-left { flex: 1.5; }
-        .section-header h2 { font-size: 3rem; text-transform: uppercase; font-weight: 700; margin-top: 0; margin-bottom: 10px; color: var(--logo-blue); }
-        .section-header .subtitle { font-size: 1.5rem; font-style: italic; margin-bottom: 30px; display: block; color: var(--logo-blue); }
-        .btn-cta-link { display: inline-block; background: var(--logo-blue); color: var(--white); padding: 15px 40px; text-decoration: none; text-transform: uppercase; font-weight: 700; margin-top: 20px; cursor: pointer; }
+        .section-header h2 { font-size: 2.5rem; text-transform: uppercase; font-weight: 700; margin-top: 0; margin-bottom: 10px; color: var(--logo-blue); }
+        .section-header .subtitle { font-size: 1.3rem; font-style: italic; margin-bottom: 30px; display: block; color: var(--logo-blue); }
+        .btn-cta-link { display: inline-block; background: var(--logo-blue); color: var(--white); padding: 15px 30px; text-decoration: none; text-transform: uppercase; font-weight: 700; margin-top: 20px; cursor: pointer; transition: all 0.3s ease; border: none; text-align: center; border-radius: 4px;}
+        .btn-cta-link:hover { transform: translateY(-2px); opacity: 0.9; }
         
-        .promo-card { background: var(--off-white); padding: 40px; border-left: 8px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: flex-start; min-height: 380px; }
+        .promo-card { background: var(--off-white); padding: 30px; border-left: 8px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: flex-start; min-height: 350px; }
         .promo-tag { background: var(--gold); color: var(--white); padding: 5px 15px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
-        .promo-card h3 { font-size: 1.6rem; margin-bottom: 10px; color: var(--logo-blue); white-space: nowrap; letter-spacing: -0.5px; }
-        .promo-card p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; width: 100%; flex-grow: 1; }
-        .promo-card .btn-cta-link { margin-top: auto; }
+        .promo-card h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--logo-blue); letter-spacing: -0.5px; }
+        .promo-card p { font-size: 1rem; line-height: 1.6; margin-bottom: 25px; width: 100%; flex-grow: 1; }
+        .promo-card .btn-cta-link { margin-top: auto; width: 100%;}
+
+        #design-hero { background-image: url('IMG_4359.jpg'); background-size: cover; background-position: center 15%; min-height: 80vh; }
 
         /* FOOTER */
         .main-footer { background-color: var(--logo-blue); color: var(--white); padding: 60px 6% 0; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; padding-bottom: 40px; }
-        .footer-col h4 { font-size: 1.2rem; text-transform: uppercase; margin-top: 0; margin-bottom: 20px; letter-spacing: 2px; color: var(--gold); }
+        .footer-col h4 { font-size: 1.1rem; text-transform: uppercase; margin-top: 0; margin-bottom: 20px; letter-spacing: 1px; color: var(--gold); }
         .footer-col p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 10px; color: #ddd; }
         .footer-col a { display: block; color: #ddd; text-decoration: none; margin-bottom: 10px; transition: color 0.3s ease; cursor: pointer; }
         .footer-col a:hover { color: var(--gold); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; text-align: center; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #aaa; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; text-align: center; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: #aaa; }
 
+        /* AI Keywords Styles */
+        .keyword-tag { background: var(--off-white); color: var(--logo-blue); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; border: 1px solid #ddd; display: inline-block; }
+        .keyword-tag:hover { background: var(--gold); color: var(--white); border-color: var(--gold); transform: translateY(-2px); }
+        .keyword-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+        .keyword-label { font-size: 0.85rem; font-weight: 700; color: #666; width: 75px; text-transform: uppercase; letter-spacing: 1px; }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* 📱 MOBILE OPTIMIZATION OVERRIDES 📱 */
         @media (max-width: 1024px) {
-            .sub-info-bar { height: auto; flex-direction: column; padding: 20px; }
-            .nav-wrapper { flex-direction: column; gap: 20px; align-items: center; }
-            .nav-estimate-group { align-items: center; }
-            .nav-exp-subtext { text-align: center; font-size: 17px; } 
-            .values-container { grid-template-columns: 1fr; gap: 30px; }
+            .mobile-menu-btn { display: inline-block; position: absolute; right: 5%; top: 50px; z-index: 2500;}
+            
+            /* Keeps the text on one line for mobile view */
+            .desk-break { display: inline; margin-left: 4px; }
+            
+            .sub-info-bar { height: auto; padding: 20px 5%; flex-direction: column; align-items: flex-start;}
+            
+            .nav-wrapper { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px 0 10px; margin-top: 10px; border-top: 1px solid #eee;}
+            .nav-wrapper.active-mobile-nav { display: flex; }
+            
+            .nav-sections-container { width: 100%; }
+            .nav-links { flex-direction: column; width: 100%; align-items: flex-start; gap: 5px; }
+            .nav-links a { font-size: 1rem !important; margin: 0 !important; width: 100%; padding: 12px 5px; text-align: left; border-bottom: 1px solid #f5f5f5;}
+            
+            .nav-estimate-group { width: 100%; align-items: stretch; margin-top: 10px;}
+            .nav-exp-subtext { text-align: center; font-size: 15px; margin-top: 15px;} 
+
+            .values-container { grid-template-columns: 1fr; gap: 20px; }
             .city-list { grid-template-columns: 1fr; }
-            .page-flex-container, .project-layout, .process-layout, .elevate-section, .areas-serve-section, .services-grid { flex-direction: column; text-align: center; }
-            .hero h1 { font-size: 1.8rem; }
-            .page-left { text-align: center; }
-            .sub-page-hero { padding-top: 260px; }
-            .nav-links a { margin-right: 15px; font-size: 0.7rem; }
+            
+            .page-content-section, .elevate-section, .areas-serve-section, .process-section, .project-section, .residential-services-home { padding: 50px 5%; }
+            
+            .page-flex-container, .project-layout, .process-layout, .elevate-section, .areas-serve-section, .services-grid { flex-direction: column; text-align: center; gap: 40px;}
+            
+            .contact-form { grid-template-columns: 1fr; }
+            .contact-form textarea.full-width { grid-column: span 1; }
+            .btn-submit { grid-column: span 1; max-width: 100%; }
+
+            .hero h1 { font-size: 2rem; letter-spacing: 2px;}
+            .hero-phone-cta { font-size: 1.1rem; }
+            .page-left, .areas-content, .elevate-text, .process-content, .project-form-container { text-align: center; }
+            .sub-page-hero { padding-top: 180px; padding-bottom: 60px;}
+            
+            #design-hero { background-position: center top; min-height: 50vh; }
+            .btn-green-box, .btn-areas-estimate, .btn-areas-promo, .hero-estimate-btn, .btn-cta-link { width: 100%; box-sizing: border-box;}
         }
     </style>
 </head>
@@ -616,26 +459,31 @@
         <div class="top-info-bar">
             <div>Hours: Monday to Friday, 8am to 4:30pm</div>
             <div style="display: flex; gap: 25px;">
-                <a href="tel:2508998878" class="phone-link">Call 250 899 8878</a>
+                <a href="tel:2508998878" class="phone-link">Call 250 66 88 99 6</a>
             </div>
         </div>
 
         <div class="sub-info-bar">
             <a onclick="showPage('home')" class="logo">
-                <img id="logoImg" src="LayerProPaintingNoBackRound.png" alt="Layer Pro Painting Logo" onerror="handleLogoError()">
+                <img id="logoImg" src="LayerProPaintingNoBackRound.png" alt="Layer Pro Painting - Kelowna's High End Painters Logo" onerror="handleLogoError()">
             </a>
-            <div class="nav-wrapper">
+            
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ MENU</div>
+
+            <div class="nav-wrapper" id="main-nav-wrapper">
                 <div class="nav-sections-container">
                     <nav class="nav-links">
                         <a id="nav-home" onclick="showPage('home')" class="active-nav">Home</a>
                         <a id="nav-about" onclick="showPage('about')">About</a>
-                        <a id="nav-interior" onclick="showPage('interior')">Interior Painting</a>
-                        <a id="nav-exterior" onclick="showPage('exterior')">Exterior Painting</a>
-                        <a id="nav-promotions" onclick="showPage('promotions')">Special Offers</a>
+                        <a id="nav-ai" onclick="showPage('ai')">AI Colour<span class="desk-break">Assistant</span></a>
+                        <a id="nav-interior" onclick="showPage('interior')">Interior<span class="desk-break">Painting</span></a>
+                        <a id="nav-exterior" onclick="showPage('exterior')">Exterior<span class="desk-break">Painting</span></a>
+                        <a id="nav-design" onclick="showPage('design')">Design &<span class="desk-break">Renovations</span></a>
+                        <a id="nav-promotions" onclick="showPage('promotions')">Special<span class="desk-break">Offers</span></a>
                     </nav>
                 </div>
                 <div class="nav-estimate-group">
-                    <nav class="nav-links">
+                    <nav class="nav-links" style="margin: 0;">
                         <a onclick="showPage('home', 'estimate-home')" class="btn-estimate">Free Estimate</a>
                     </nav>
                     <span class="nav-exp-subtext">20+ Years of Experience in the Sector</span>
@@ -644,7 +492,6 @@
         </div>
     </div>
 
-    <!-- HOME PAGE VIEW -->
     <div id="home-view">
         <section class="hero">
             <h1>
@@ -656,8 +503,8 @@
                 <a onclick="showPage('exterior', 'exterior-details')" class="hero-tab">Exterior Painting</a>
             </div>
             <div class="hero-estimate-container">
-                <a onclick="showPage('home', 'estimate-home')" class="hero-estimate-btn">Get Free Estimate</a>
-                <a href="tel:2508998878" class="hero-phone-cta">Call 250 899 8878</a>
+                <a onclick="showPage('ai')" class="hero-estimate-btn btn-ai-animated">Explore AI Colour Assistant</a>
+                <a href="tel:2508998878" class="hero-phone-cta" style="margin-top: 10px;">Call 250 66 88 99 6</a>
             </div>
         </section>
 
@@ -691,10 +538,13 @@
                 <h2>Elevate Your Home</h2>
                 <h3>High-End Painting With a Personal Touch</h3>
                 <p>At Layer Pro-Painting, we help Okanagan homeowners transform their spaces through flawless finishes and tailored service.</p>
-                <a onclick="showPage('home', 'estimate-home')" class="btn-green-box">Get Free Estimate</a>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+                    <a onclick="showPage('home', 'estimate-home')" class="btn-green-box">Get Your Free Estimate</a>
+                    <a onclick="showPage('ai')" class="btn-green-box" style="background-color: var(--gold);">Explore AI Colour Assistant</a>
+                </div>
             </div>
             <div class="elevate-image">
-                <img src="blue2livingroom.jpg" alt="Elevate Your Home">
+                <img src="blue2livingroom.jpg" alt="High-end interior living room painting in Kelowna">
             </div>
         </section>
 
@@ -702,14 +552,14 @@
             <h2>Residential Painting Services</h2>
             <div class="services-grid">
                 <div class="service-card" onclick="showPage('interior')">
-                    <img src="greenlivingroom.jpg" alt="Interior Painting">
+                    <img src="greenlivingroom.jpg" alt="Residential Interior Painting Services Okanagan">
                     <div class="service-overlay">
                         <h4>Interior Painting</h4>
                         <p>We prep and paint interior surfaces with precision, making your walls, ceiling and trim look flawless.</p>
                     </div>
                 </div>
                 <div class="service-card" onclick="showPage('exterior')">
-                    <img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior Painting">
+                    <img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Residential Exterior Painting Services Okanagan">
                     <div class="service-overlay">
                         <h4>Exterior Painting</h4>
                         <p style="color: var(--dark-green); text-shadow: 0px 2px 10px rgba(255,255,255,0.9), 0px 0px 15px rgba(255,255,255,1);">From stucco to siding, we deliver exterior painting that turns heads and weathers well.</p>
@@ -720,7 +570,7 @@
         
         <section id="areas-serve-home" class="areas-serve-section">
             <div class="areas-map-container">
-                <img src="Okamap.jpg" alt="Okanagan Map">
+                <img src="Okamap.jpg" alt="Okanagan Service Area Map Layer Pro Painting">
             </div>
             <div class="areas-content">
                 <h2>Areas We Serve</h2>
@@ -738,7 +588,7 @@
 
         <section id="our-process-home" class="process-section">
             <div class="process-layout">
-                <div class="process-image"><img src="ourprocess.jpg" alt="Our Process" onerror="this.src='blue-whitelivingroomandkitchen.jpg'"></div>
+                <div class="process-image"><img src="ourprocess.jpg" alt="Layer Pro Painting Professional Process" onerror="this.src='blue-whitelivingroomandkitchen.jpg'"></div>
                 <div class="process-content">
                     <div class="process-header"><h2>Our Process</h2></div>
                     <div class="accordion">
@@ -756,23 +606,29 @@
                 <div class="project-form-container">
                     <h2>LET'S TALK ABOUT YOUR PROJECT</h2>
                     <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
                     <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <input type="hidden" name="Source_Page" value="Home Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
                     </form>
                 </div>
                 <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Beautiful kitchen and living room custom painting in Kelowna">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- INTERIOR PAINTING VIEW -->
     <div id="interior-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(27, 59, 90, 0.85), rgba(27, 59, 90, 0.85)), url('blue2livingroom.jpg');">
             <h1>Interior Painting Services</h1>
@@ -801,9 +657,12 @@
                         </ul>
                     </div>
 
-                    <a onclick="showPage('interior', 'estimate-interior')" class="btn-cta-link">Get Free Estimate</a>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                        <a onclick="showPage('interior', 'estimate-interior')" class="btn-cta-link" style="margin-top: 0;">Get Free Estimate</a>
+                        <a onclick="showPage('ai')" class="btn-cta-link" style="margin-top: 0; background: var(--gold);">Explore AI Colour Assistant</a>
+                    </div>
                 </div>
-                <div style="flex: 1.2;"><img src="8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg" alt="Interior" style="width: 100%; box-shadow: 10px 10px 0 var(--logo-blue);"></div>
+                <div style="flex: 1.2;"><img src="8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg" alt="Interior Trim and Millwork Painting Kelowna" style="width: 100%; box-shadow: 10px 10px 0 var(--logo-blue);"></div>
             </div>
         </section>
 
@@ -812,23 +671,29 @@
                 <div class="project-form-container">
                     <h2>LET'S TALK ABOUT YOUR INTERIOR PROJECT</h2>
                     <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
                     <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <input type="hidden" name="Source_Page" value="Interior Painting Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
                     </form>
                 </div>
                 <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Custom living room interior painting">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- EXTERIOR PAINTING VIEW -->
     <div id="exterior-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(26, 58, 50, 0.85), rgba(26, 58, 50, 0.85)), url('7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg');">
             <h1>Exterior Painting Services</h1>
@@ -857,9 +722,12 @@
                         </ul>
                     </div>
 
-                    <a onclick="showPage('exterior', 'estimate-exterior')" class="btn-cta-link" style="background: var(--dark-green);">Get Free Estimate</a>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                        <a onclick="showPage('exterior', 'estimate-exterior')" class="btn-cta-link" style="margin-top: 0; background: var(--dark-green);">Get Free Estimate</a>
+                        <a onclick="showPage('ai')" class="btn-cta-link" style="margin-top: 0; background: var(--gold);">Explore AI Colour Assistant</a>
+                    </div>
                 </div>
-                <div style="flex: 1.2;"><img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Exterior" style="width: 100%; box-shadow: -10px 10px 0 var(--dark-green);"></div>
+                <div style="flex: 1.2;"><img src="7D9DFF02-D471-43DC-9C16-358F837188B0_1_105_c_edited_edited.jpg" alt="Premium exterior house painting Okanagan" style="width: 100%; box-shadow: -10px 10px 0 var(--dark-green);"></div>
             </div>
         </section>
 
@@ -868,23 +736,287 @@
                 <div class="project-form-container">
                     <h2>LET'S TALK ABOUT YOUR EXTERIOR PROJECT</h2>
                     <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
                     <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <input type="hidden" name="Source_Page" value="Exterior Painting Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
                     </form>
                 </div>
                 <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Layer Pro Painting Quality Work">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- SPECIAL OFFERS PAGE VIEW -->
+    <div id="ai-view" style="display:none;">
+        <section class="sub-page-hero" style="background-image: linear-gradient(to right, rgba(27, 59, 90, 0.85), rgba(26, 58, 50, 0.85), rgba(192, 108, 76, 0.85), rgba(178, 148, 94, 0.85)), url('greenlivingroom.jpg'); background-position: center;">
+            <h1>AI Design Studio</h1>
+            <p>Innovative Tools to Visualize Your Perfect Space</p>
+        </section>
+
+        <section class="page-content-section" style="padding-bottom: 40px; background: var(--white);">
+            <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+                <div class="section-header">
+                    <h2>AI Colour Design Assistant</h2>
+                    <span class="subtitle">Experience the future of interior design.</span>
+                </div>
+                <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px; color: #444;">Choosing the right colors can be overwhelming. To make the process inspiring and effortless, we've integrated advanced AI tools directly into our platform.</p>
+                <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px; color: #444;">Generate a bespoke palette based on a feeling, and then book an estimate with our team to bring your vision to life.</p>
+            </div>
+        </section>
+
+        <section class="page-content-section" style="background: var(--light-gray); border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+            <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+                <div class="section-header">
+                    <div style="font-size: 1.4rem; color: var(--logo-blue); margin-bottom: 10px;"><i style="color: var(--gold); font-weight: bold; font-style: italic;">Discover the colour of your style and mood.</i></div>
+                    <h2 style="margin-top: 0; margin-bottom: 15px;">Palette Generator</h2>
+                </div>
+                <p style="font-size: 1.1rem; margin-bottom: 30px; color: #444;">Describe the feeling, mood, or style you want for your space. Our AI interior design tool will generate a bespoke, high-end 4-color palette specifically tailored for your home.</p>
+                
+                <div style="background: var(--white); padding: 40px 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-radius: 8px;">
+                    <textarea id="ai-prompt-input" placeholder="E.g., I want a calm, bright, airy coastal living room with subtle sand and sea tones..." style="width: 100%; min-height: 120px; padding: 20px; font-family: inherit; font-size: 1.1rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px; resize: vertical; box-sizing: border-box;"></textarea>
+                    
+                    <p style="font-size: 0.95rem; color: var(--logo-blue); font-style: italic; margin: 10px 0 8px 0; text-align: left;">Please pick one sample below and, if you prefer, mix and match it with your preferred style, mood, or feeling:</p>
+                    
+                    <select id="ai-prompt-templates" onchange="insertPrompt(this)" style="width: 100%; padding: 12px 15px; margin-bottom: 25px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 1rem; color: #555; background-color: #fcfcfc; cursor: pointer; box-sizing: border-box;">
+                        <option value="">💡 Click here to pick from 30 Example Prompts ▾</option>
+                        
+                        <optgroup label="Coastal & Serene">
+                            <option value="I want a calm, bright, airy coastal living room with subtle sand and sea tones.">1. Calm, airy coastal living room with sand & sea tones</option>
+                            <option value="A serene coastal bathroom with sea salt white and deep navy cabinets.">2. Serene coastal bathroom with sea salt white & deep navy</option>
+                            <option value="Give me a breezy, nautical bedroom that feels like the ocean.">3. Breezy, nautical bedroom that feels like the ocean</option>
+                        </optgroup>
+                        
+                        <optgroup label="Dark & Moody">
+                            <option value="I want a dramatic, dark industrial home office with charcoal slate and black.">4. Dramatic industrial home office with charcoal & black</option>
+                            <option value="A moody, intimate dining room with deep shadows and metallic accents.">5. Moody, intimate dining room with shadows & metallics</option>
+                            <option value="A gothic-inspired library with dark smoked glass colors and aged brass.">6. Gothic-inspired library with smoked glass & aged brass</option>
+                        </optgroup>
+                        
+                        <optgroup label="Warm & Earthy">
+                            <option value="A cozy, nature-inspired living area with warm earthy clay and sage leaf green.">7. Cozy, nature-inspired living area with clay & sage</option>
+                            <option value="An inviting autumn-inspired kitchen with rich terracotta and warm alabaster.">8. Autumn-inspired kitchen with terracotta & warm alabaster</option>
+                            <option value="A warm desert-inspired sunroom with soft clay and mushroom taupe.">9. Warm desert sunroom with soft clay & mushroom taupe</option>
+                        </optgroup>
+                        
+                        <optgroup label="Modern & Minimalist">
+                            <option value="A bright, clean minimalist gallery space with stark white and steel graphite.">10. Minimalist gallery space with stark white & steel graphite</option>
+                            <option value="An ultra-modern exterior with clean white stucco and dark window mullions.">11. Ultra-modern exterior with clean white & dark mullions</option>
+                            <option value="A sleek contemporary kitchen with bright white and blonde wood tones.">12. Sleek contemporary kitchen with bright white & blonde wood</option>
+                        </optgroup>
+
+                        <optgroup label="Farmhouse & Country">
+                            <option value="A cozy country farmhouse kitchen with bright shiplap white and rustic barnwood.">13. Country farmhouse kitchen with bright shiplap & barnwood</option>
+                            <option value="A classic farmhouse exterior with crisp white siding and black trim.">14. Classic farmhouse exterior with crisp white & black trim</option>
+                            <option value="A rustic cottage guest room with sage gray and pitch black accents.">15. Rustic cottage guest room with sage gray & black accents</option>
+                        </optgroup>
+
+                        <optgroup label="Boho & Eclectic">
+                            <option value="I'm looking for a funky 70s boho living room with mustard yellow and macrame.">16. Funky 70s boho living room with mustard & macrame</option>
+                            <option value="A vibrant retro living room featuring burnt orange and olive branch.">17. Vibrant retro living room featuring burnt orange & olive</option>
+                            <option value="An eclectic home studio with vintage vibes, earthy neutrals, and warm tones.">18. Eclectic home studio with vintage vibes & earthy neutrals</option>
+                        </optgroup>
+
+                        <optgroup label="Romantic & Soft">
+                            <option value="I want a romantic bedroom with delicate blush pinks and soft cashmere tones.">19. Romantic bedroom with delicate blush pinks & cashmere</option>
+                            <option value="A soft, feminine nursery with vintage lace white and dusty rose.">20. Soft, feminine nursery with vintage lace & dusty rose</option>
+                            <option value="An elegant, sweet sitting room with delicate rose and warm gold accents.">21. Elegant sitting room with delicate rose & warm gold</option>
+                        </optgroup>
+
+                        <optgroup label="Mid-Century & Retro">
+                            <option value="A classic 1960s mid-century modern lounge with atomic teal and rich walnut.">22. Mid-century modern lounge with atomic teal & rich walnut</option>
+                            <option value="A bright midcentury entryway featuring palm springs orange and eichler white.">23. Midcentury entryway with palm springs orange & white</option>
+                            <option value="A retro 1950s kitchen with saturated MCM colors and rich wood elements.">24. Retro 1950s kitchen with saturated MCM colors & wood</option>
+                        </optgroup>
+
+                        <optgroup label="Jewel & Luxurious">
+                            <option value="Create a luxurious dining room using deep emerald green, sapphire navy, and gold.">25. Luxurious dining room with emerald green, sapphire & gold</option>
+                            <option value="An elegant master bedroom with a sophisticated plum wine and brushed brass.">26. Elegant master bedroom with plum wine & brushed brass</option>
+                            <option value="A rich, opulent living room with velvet textures and rich ruby or amethyst tones.">27. Rich, opulent living room with ruby & amethyst tones</option>
+                        </optgroup>
+
+                        <optgroup label="Forest & Mediterranean">
+                            <option value="I want a moody mountain cabin feel with deep pine greens and natural timber.">28. Moody mountain cabin with deep pine greens & timber</option>
+                            <option value="A warm, sun-baked Mediterranean patio with terracotta clay and olive grove green.">29. Sun-baked Mediterranean patio with terracotta & olive green</option>
+                            <option value="A Tuscan-inspired kitchen with textured stucco white walls and deep sea accents.">30. Tuscan-inspired kitchen with stucco white & deep sea accents</option>
+                        </optgroup>
+                    </select>
+
+                    <div style="text-align: left; margin-bottom: 30px; background: #fafafa; padding: 20px; border-radius: 6px; border-left: 4px solid var(--gold);">
+                        <h4 style="color: var(--logo-blue); margin: 0 0 5px 0; font-size: 1.1rem;">Need Inspiration?</h4>
+                        <p style="font-size: 0.95rem; color: #555; margin: 0 0 15px 0;">Click on any of the keywords below to add them to your description and guide our AI design engine.</p>
+                        
+                        <div class="keyword-group">
+                            <span class="keyword-label">Moods:</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Moody')">Moody</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Serene')">Serene</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Airy')">Airy</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Intimate')">Intimate</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Energetic')">Energetic</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Dramatic')">Dramatic</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Tranquil')">Tranquil</span>
+                        </div>
+                        <div class="keyword-group">
+                            <span class="keyword-label">Styles:</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Coastal')">Coastal</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Industrial')">Industrial</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Minimalist')">Minimalist</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Modern')">Modern</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Traditional')">Traditional</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Rustic')">Rustic</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Contemporary')">Contemporary</span>
+                        </div>
+                        <div class="keyword-group" style="margin-bottom: 0;">
+                            <span class="keyword-label">Feelings:</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Cozy')">Cozy</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Fresh')">Fresh</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Luxurious')">Luxurious</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Grounded')">Grounded</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Vibrant')">Vibrant</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Inviting')">Inviting</span>
+                            <span class="keyword-tag" onclick="addAiKeyword('Elegant')">Elegant</span>
+                        </div>
+                    </div>
+
+                    <button id="ai-generate-btn" onclick="generateColorPalette()" class="btn-cta-link" style="background: var(--gold); margin-top: 0; width: 100%; max-width: 350px;">
+                        ✨ Generate Custom Palette
+                    </button>
+
+                    <div id="ai-loading" style="display: none; margin-top: 30px; color: var(--logo-blue); font-weight: bold;">
+                        <div style="display: inline-block; width: 30px; height: 30px; border: 3px solid rgba(27, 59, 90, 0.3); border-radius: 50%; border-top-color: var(--logo-blue); animation: spin 1s ease-in-out infinite; margin-bottom: 10px;"></div>
+                        <br>Consulting our AI Design Engine...
+                    </div>
+
+                    <div id="ai-palette-result" style="display: none; text-align: left;"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="estimate-ai" class="project-section">
+            <div class="project-layout">
+                <div class="project-form-container">
+                    <h2>LET'S BRING IT TO LIFE</h2>
+                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Found the perfect color? Contact us today for a free estimate.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
+                    <form class="contact-form">
+                        <input type="hidden" name="Source_Page" value="AI Design Studio Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message (Tell us about your project)" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
+                    </form>
+                </div>
+                <div class="project-image">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior AI Concept Mockup Layer Pro">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="design-view" style="display:none;">
+        <section id="design-hero" class="sub-page-hero">
+            <h1>Design & Renovations</h1>
+            <p>Where Vision Meets Master Craftsmanship</p>
+        </section>
+
+        <section id="design-details" class="page-content-section">
+            <div class="page-flex-container">
+                <div class="page-left">
+                    <div class="section-header">
+                        <h2>Design & Renovations</h2>
+                        <span class="subtitle">Where Vision Meets Master Craftsmanship</span>
+                    </div>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">At Layer Pro Painting, we believe that a truly beautiful space starts with a strong design line. For over 20 years, we have been transforming interiors into architectural masterpieces, blending technical expertise with an unmistakable high-end aesthetic.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px;">Our Design & Renovations division is dedicated to homeowners who seek more than just a fresh coat of paint—they seek a complete reimagining of their living environment. Whether you are looking for a chic, modern update or a timeless, architectural overhaul, our team delivers results that are as functional as they are breathtaking.</p>
+                    
+                    <div style="margin: 40px 0;">
+                        <h3 style="color: var(--logo-blue); text-transform: uppercase; font-size: 1.4rem; margin-bottom: 15px; letter-spacing: 1px;">Our Specialized Services</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">We specialize in full-scale remodeling and meticulous renovations that elevate the value and soul of your home.</p>
+                        
+                        <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; gap: 20px; font-size: 1.05rem; color: #444;">
+                            <li style="background: var(--off-white); padding: 20px; border-left: 4px solid var(--gold);"><strong style="color: var(--logo-blue); font-size: 1.15rem; display: block; margin-bottom: 5px;">Kitchen Remodeling:</strong> The heart of the home deserves a high-end touch. From custom shaker-style cabinetry to premium Calacatta stone surfaces, we create culinary spaces that define elegance.</li>
+                            <li style="background: var(--off-white); padding: 20px; border-left: 4px solid var(--logo-blue);"><strong style="color: var(--logo-blue); font-size: 1.15rem; display: block; margin-bottom: 5px;">Bathroom Renovations:</strong> Transform your bathroom into a private spa. We focus on sophisticated textures, high-end fixtures, and layouts that maximize both comfort and style.</li>
+                            <li style="background: var(--off-white); padding: 20px; border-left: 4px solid var(--dark-green);"><strong style="color: var(--logo-blue); font-size: 1.15rem; display: block; margin-bottom: 5px;">Plan Remodeling & Spatial Design:</strong> Sometimes the existing layout doesn’t fit your lifestyle. We rethink and remodel floor plans to improve flow, light, and architectural impact.</li>
+                            <li style="background: var(--off-white); padding: 20px; border-left: 4px solid var(--gold);"><strong style="color: var(--logo-blue); font-size: 1.15rem; display: block; margin-bottom: 5px;">Interior Architecture:</strong> Our 20+ years of experience allow us to look beyond the surface, ensuring every renovation is structurally sound and aesthetically superior.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--logo-blue); color: var(--white); padding: 40px; margin: 40px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--gold); margin-top: 0; font-size: 1.6rem; text-transform: uppercase;">A Collaborative Approach to Luxury</h3>
+                        <p style="line-height: 1.8; margin-bottom: 15px; font-size: 1rem;">Great design is a dialogue. To ensure every project meets the highest standards of luxury and "chic" sophistication, we work in close partnership with our sister company, <strong>Ira Design & Interiors</strong>.</p>
+                        <p style="line-height: 1.8; margin-bottom: 25px; font-size: 1rem;">By combining the precision of Layer Pro Painting’s execution with the visionary concepts of Ira Design, we provide a seamless "concept-to-completion" experience.</p>
+                        
+                        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
+                            <div style="flex: 1; min-width: 280px; text-align: center;">
+                                <a href="https://www.iradesign.ca" target="_blank" rel="noopener noreferrer" class="btn-cta-link" style="background: var(--gold); color: var(--white); margin-top: 0;">Visit Ira Design & Interiors</a>
+                            </div>
+                            <div style="flex-shrink: 0; margin: 0 auto;">
+                                <a href="https://www.iradesign.ca" target="_blank" rel="noopener noreferrer" style="display: block; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                                    <img src="IraLogo2020.png" alt="Ira Design and Interiors Kelowna Partner Logo" style="max-height: 165px; width: auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: none;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--logo-blue); font-size: 1.4rem;">Ready to Transform Your Home?</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 25px;">Experience the difference that two decades of professional mastery can make. Let’s build something extraordinary together.</p>
+                    <a onclick="showPage('design', 'estimate-design')" class="btn-cta-link">Contact Us Today for a Consultation</a>
+                </div>
+                <div style="flex: 1.2; display: flex; flex-direction: column; gap: 40px;">
+                    <img src="IMG_4267.jpg" alt="Modern Living Room Renovation Kelowna" style="width: 100%; box-shadow: 10px 10px 0 var(--logo-blue);">
+                    <img src="IMG_4326.jpg" alt="High-End Kitchen Remodeling Okanagan" style="width: 100%; box-shadow: -10px 10px 0 var(--gold);">
+                    <img src="IMG_4390.jpg" alt="Interior Architecture and Design Finish" style="width: 100%; box-shadow: 10px 10px 0 var(--dark-green);">
+                    <img src="IMG_4245.jpg" alt="Luxury Wine Room Painting Detail" style="width: 100%; box-shadow: -10px 10px 0 var(--logo-blue);">
+                </div>
+            </div>
+        </section>
+
+        <section id="estimate-design" class="project-section">
+            <div class="project-layout">
+                <div class="project-form-container">
+                    <h2>LET'S TALK ABOUT YOUR RENOVATION</h2>
+                    <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Contact us today to schedule your design and renovation consultation.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
+                    <form class="contact-form">
+                        <input type="hidden" name="Source_Page" value="Design & Renovations Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message (Tell us about your project)" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
+                    </form>
+                </div>
+                <div class="project-image">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Home renovation consultation Kelowna">
+                </div>
+            </div>
+        </section>
+    </div>
+
     <div id="promotions-view" style="display:none;">
         <section class="sub-page-hero" style="background-image: linear-gradient(rgba(27, 59, 90, 0.85), rgba(27, 59, 90, 0.85)), url('blue2livingroom.jpg');">
             <h1>Special Offers</h1>
@@ -907,8 +1039,8 @@
                 </div>
                 <div class="promo-card" style="border-left-color: var(--dark-green);">
                     <span class="promo-tag" style="background: var(--dark-green);">Complimentary</span>
-                    <h3>Free Colour Consult</h3>
-                    <p>Not sure which shade suits your space best? Book a project with us and receive a complimentary professional colour consultation to ensure perfect results.</p>
+                    <h3>Free Digital Mockup</h3>
+                    <p>Not sure which shade suits your space best? Book a project with us and receive a complimentary professional digital mockup so you can see the colors before we paint.</p>
                     <a onclick="showPage('promotions', 'estimate-promotions')" class="btn-cta-link" style="background: var(--dark-green);">Book Consult</a>
                 </div>
             </div>
@@ -919,25 +1051,31 @@
                 <div class="project-form-container">
                     <h2>CLAIM YOUR OFFER & GET A QUOTE</h2>
                     <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Mention your special offer in the message below.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
                     <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <input type="hidden" name="Source_Page" value="Special Offers Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
                     </form>
                 </div>
                 <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Kelowna painting project special offer">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- ABOUT PAGE VIEW -->
     <div id="about-view" style="display:none;">
-        <section class="sub-page-hero" style="background-image: url('8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg'); min-height: 65vh; background-position: center top;"></section>
+        <section class="sub-page-hero" style="background-image: url('8B323D02-3867-4C1E-8137-84BCD097FEC3_1_105_c.jpeg'); min-height: 65vh; background-position: center 15%;"></section>
 
         <section class="page-content-section">
             <div class="page-flex-container">
@@ -948,16 +1086,19 @@
                     </div>
                     <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">At Layer Pro-Painting, we believe a beautiful space starts with a seamless process. Our promise is to deliver premium finishes through a professional, detail-driven, and customer-centered approach.</p>
                     <p style="font-size: 1.1rem; line-height: 1.8;">With 20+ years of experience in the sector, we bring expertise to every brushstroke, ensuring your home is treated with the respect and care it deserves. We are a locally owned and operated business serving the entire Okanagan Valley.</p>
-                    <a onclick="showPage('about', 'estimate-about')" class="btn-cta-link">Get Free Estimate</a>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                        <a onclick="showPage('about', 'estimate-about')" class="btn-cta-link" style="margin-top: 0;">Get Free Estimate</a>
+                        <a onclick="showPage('ai')" class="btn-cta-link" style="margin-top: 0; background: var(--gold);">Explore AI Colour Assistant</a>
+                    </div>
                 </div>
                 
                 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                    <img src="LayerProPaintingNoBackRound.png" alt="Logo" style="width: 100%; max-width: 300px;" onerror="handleLogoError()">
+                    <img src="LayerProPaintingNoBackRound.png" alt="Layer Pro Painting Company Kelowna" style="width: 100%; max-width: 300px;" onerror="handleLogoError()">
                     
                     <div style="background: var(--off-white); padding: 25px; text-align: center; border-left: 5px solid var(--logo-blue); width: 100%;">
                         <p style="margin: 0 0 15px 0; font-size: 1.1rem;">Kelowna, British Columbia<br><span style="font-style: italic; color: var(--gold);">Serving the entire Okanagan Valley</span></p>
                         
-                        <p style="margin: 0 0 5px 0; font-weight: bold; color: var(--logo-blue);">Phone: <a href="tel:2508998878" style="color: var(--logo-blue); text-decoration: none;">250 899 8878</a></p>
+                        <p style="margin: 0 0 5px 0; font-weight: bold; color: var(--logo-blue);">Phone: <a href="tel:2508998878" style="color: var(--logo-blue); text-decoration: none;">250 66 88 99 6</a></p>
                         <p style="margin: 0; font-weight: bold; color: var(--logo-blue);">Email: <a href="mailto:info@layerpropainting.com" style="color: var(--logo-blue); text-decoration: none;">info@layerpropainting.com</a></p>
                     </div>
                 </div>
@@ -991,7 +1132,7 @@
 
         <section id="process-about" class="process-section">
             <div class="process-layout">
-                <div class="process-image"><img src="ourprocess.jpg" alt="Our Process" onerror="this.src='blue-whitelivingroomandkitchen.jpg'"></div>
+                <div class="process-image"><img src="ourprocess.jpg" alt="How Layer Pro Painting Works" onerror="this.src='blue-whitelivingroomandkitchen.jpg'"></div>
                 <div class="process-content">
                     <div class="process-header"><h2>Our Process</h2></div>
                     <div class="accordion">
@@ -1006,7 +1147,7 @@
 
         <section id="areas-serve-about" class="areas-serve-section">
             <div class="areas-map-container">
-                <img src="Okamap.jpg" alt="Okanagan Map">
+                <img src="Okamap.jpg" alt="Okanagan Painting Service Areas Map">
             </div>
             <div class="areas-content">
                 <h2 style="color: var(--dark-green);">Areas We Serve</h2>
@@ -1027,23 +1168,29 @@
                 <div class="project-form-container">
                     <h2>LET'S TALK ABOUT YOUR PROJECT</h2>
                     <p class="project-subtitle" style="margin-bottom: 30px; font-style: italic;">Receive your quote the same day as your on-site visit.</p>
+                    
+                    <div data-fs-success style="display:none; color: var(--dark-green); padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; margin-bottom: 20px; font-weight: 700;">
+                        Thank you! Your quote request has been sent successfully. We will contact you soon.
+                    </div>
+                    <div data-fs-error style="display:none; color: #c00; padding: 15px; background: #fee; border: 1px solid #fcc; border-radius: 4px; margin-bottom: 20px;"></div>
+
                     <form class="contact-form">
-                        <input type="text" placeholder="First Name" required>
-                        <input type="text" placeholder="Last Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Phone" required>
-                        <textarea placeholder="Message" class="full-width" required></textarea>
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <input type="hidden" name="Source_Page" value="About Us Page">
+                        <input type="text" name="firstName" placeholder="First Name" data-fs-field required>
+                        <input type="text" name="lastName" placeholder="Last Name" data-fs-field required>
+                        <input type="email" name="email" placeholder="Email" data-fs-field required>
+                        <input type="tel" name="phone" placeholder="Phone" data-fs-field required>
+                        <textarea name="message" placeholder="Message" class="full-width" data-fs-field required></textarea>
+                        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Message</button>
                     </form>
                 </div>
                 <div class="project-image">
-                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior Decor">
+                    <img src="blue-whitelivingroomandkitchen.jpg" alt="Interior home remodel Kelowna">
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- GLOBAL BLUE FOOTER -->
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-col">
@@ -1054,13 +1201,15 @@
                 <h4>Quick Links</h4>
                 <a onclick="showPage('home')">Home</a>
                 <a onclick="showPage('about')">About Us</a>
+                <a onclick="showPage('ai')">AI Colour Assistant</a>
                 <a onclick="showPage('interior')">Interior Painting</a>
                 <a onclick="showPage('exterior')">Exterior Painting</a>
+                <a onclick="showPage('design')">Design & Renovations</a>
                 <a onclick="showPage('promotions')">Special Offers</a>
             </div>
             <div class="footer-col">
                 <h4>Contact Info</h4>
-                <p><strong>Phone:</strong> <a href="tel:2508998878" style="display:inline; color:var(--white);">250 899 8878</a></p>
+                <p><strong>Phone:</strong> <a href="tel:2508998878" style="display:inline; color:var(--white);">250 66 88 99 6</a></p>
                 <p><strong>Email:</strong> info@layerpropainting.com</p>
                 <p><strong>Hours:</strong> Mon - Fri, 8am - 4:30pm</p>
                 <p>Kelowna, BC</p>
@@ -1071,7 +1220,6 @@
         </div>
     </footer>
 
-    <!-- POP-UP MODAL -->
     <div id="promo-modal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
