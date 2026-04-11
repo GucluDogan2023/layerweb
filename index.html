@@ -408,50 +408,61 @@
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; text-align: center; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: #aaa; }
 
         /* AI Keywords Styles */
-        .keyword-tag { background: var(--off-white); color: var(--logo-blue); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; border: 1px solid #ddd; display: inline-block; }
-        .keyword-tag:hover { background: var(--gold); color: var(--white); border-color: var(--gold); transform: translateY(-2px); }
-        .keyword-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
-        .keyword-label { font-size: 0.85rem; font-weight: 700; color: #666; width: 75px; text-transform: uppercase; letter-spacing: 1px; }
+        .keyword-tag { background: #eee; color: var(--logo-blue); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; margin-right: 5px; margin-bottom: 5px; display: inline-block; }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* 📱 MOBILE OPTIMIZATION OVERRIDES 📱 */
+        /* 📱 TABLET & DESKTOP ADJUSTMENTS 📱 */
         @media (max-width: 1024px) {
-            .mobile-menu-btn { display: inline-block; position: absolute; right: 5%; top: 50px; z-index: 2500;}
-            
-            /* Keeps the text on one line for mobile view */
-            .desk-break { display: inline; margin-left: 4px; }
-            
-            .sub-info-bar { height: auto; padding: 20px 5%; flex-direction: column; align-items: flex-start;}
-            
-            .nav-wrapper { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px 0 10px; margin-top: 10px; border-top: 1px solid #eee;}
+            .mobile-menu-btn { display: block; }
+            .sub-info-bar { height: auto; padding: 20px 5%; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+            .nav-wrapper { display: none; width: 100%; flex-direction: column; padding-top: 20px; border-top: 1px solid #eee; margin-top: 15px; }
             .nav-wrapper.active-mobile-nav { display: flex; }
-            
-            .nav-sections-container { width: 100%; }
-            .nav-links { flex-direction: column; width: 100%; align-items: flex-start; gap: 5px; }
-            .nav-links a { font-size: 1rem !important; margin: 0 !important; width: 100%; padding: 12px 5px; text-align: left; border-bottom: 1px solid #f5f5f5;}
-            
-            .nav-estimate-group { width: 100%; align-items: stretch; margin-top: 10px;}
-            .nav-exp-subtext { text-align: center; font-size: 15px; margin-top: 15px;} 
+            .nav-links { flex-direction: column; align-items: flex-start; width: 100%; }
+            .nav-links a { width: 100%; text-align: left; padding: 12px 5px; border-bottom: 1px solid #f5f5f5; font-size: 1rem; }
+            .desk-break { display: inline; margin-left: 5px; }
+            .nav-estimate-group { width: 100%; align-items: stretch; margin-top: 15px; }
+            .nav-links a.btn-estimate { text-align: center; }
+        }
 
-            .values-container { grid-template-columns: 1fr; gap: 20px; }
-            .city-list { grid-template-columns: 1fr; }
-            
+        /* 📱 MOBILE SPECIFIC OPTIMIZATIONS 📱 */
+        @media (max-width: 768px) {
+            /* Header Fixes for Tiny Screens */
+            .top-info-bar { flex-direction: column; height: auto; padding: 10px 5%; gap: 5px; white-space: normal; text-align: center; line-height: 1.4;}
+            .logo img { height: 60px; }
+            .mobile-menu-btn { padding: 6px 12px; font-size: 1.2rem; }
+
+            /* Adjust Paddings to give more space for content */
             .page-content-section, .elevate-section, .areas-serve-section, .process-section, .project-section, .residential-services-home { padding: 50px 5%; }
+            .hero { padding: 130px 5% 0; }
+            .sub-page-hero { padding: 160px 5% 60px; }
             
-            .page-flex-container, .project-layout, .process-layout, .elevate-section, .areas-serve-section, .services-grid { flex-direction: column; text-align: center; gap: 40px;}
+            /* Text Sizing */
+            .hero h1 { font-size: 1.8rem; letter-spacing: 2px; }
+            .sub-page-hero h1 { font-size: 2rem; }
+            .section-header h2 { font-size: 2rem; }
             
-            .contact-form { grid-template-columns: 1fr; }
-            .contact-form textarea.full-width { grid-column: span 1; }
-            .btn-submit { grid-column: span 1; max-width: 100%; }
+            /* Force all Flex Layouts to Stack Vertically & Center */
+            .page-flex-container, .project-layout, .process-layout, .elevate-section, .areas-serve-section { flex-direction: column !important; text-align: center; gap: 40px; }
+            .elevate-text, .areas-content, .process-content, .page-left, .project-form-container { text-align: center; width: 100%; }
+            .section-header { text-align: center !important; }
 
-            .hero h1 { font-size: 2rem; letter-spacing: 2px;}
-            .hero-phone-cta { font-size: 1.1rem; }
-            .page-left, .areas-content, .elevate-text, .process-content, .project-form-container { text-align: center; }
-            .sub-page-hero { padding-top: 180px; padding-bottom: 60px;}
+            /* Force all Grids to Single Column */
+            .values-container, .services-grid, .city-list, .contact-form { grid-template-columns: 1fr; gap: 20px; }
+            .contact-form textarea { grid-column: span 1; min-height: 100px;}
             
-            #design-hero { background-position: center top; min-height: 50vh; }
-            .btn-green-box, .btn-areas-estimate, .btn-areas-promo, .hero-estimate-btn, .btn-cta-link { width: 100%; box-sizing: border-box;}
+            /* Make Buttons Full Width for Thumb-Tapping */
+            .hero-tabs { flex-direction: column; width: 100%; padding: 0; box-sizing: border-box; }
+            .hero-tab, .btn-green-box, .btn-areas-estimate, .btn-areas-promo, .btn-cta-link, .hero-estimate-btn, .btn-submit { width: 100%; max-width: 100%; box-sizing: border-box; display: block; margin: 10px auto; text-align: center; }
+
+            /* Fix Image Overflows caused by heavy box-shadows */
+            .elevate-image img, .areas-map-container img, .process-image img, .project-image img { box-shadow: 8px 8px 0 var(--logo-blue) !important; max-width: calc(100% - 8px); margin: 0 auto; }
+            .page-flex-container img { box-shadow: 8px 8px 0 var(--logo-blue) !important; max-width: calc(100% - 8px); margin: 0 auto; }
+
+            /* Fix List Items */
+            .page-left ul { grid-template-columns: 1fr !important; text-align: left; padding: 0 15px; }
+            .city-list { justify-items: center; }
+            
+            /* Fix AI Palette Grid */
+            #ai-palette-result > div > div { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
